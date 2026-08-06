@@ -1,15 +1,5 @@
 [
   {
-    "title": "Kos Ibu Ami Petarukan",
-    "status": "live",
-    "statusColor": "bg-red",
-    "desc": "Kos Ibu Ami Petarukan is a simple and comfortable boarding house located in Petarukan. It provides essential facilities, a strategic location, and an easy way for tenants to get information through the website.",
-    "tags": ["Next.js", "Tailwind CSS", "shadcn/ui"],
-    "borderColor": "border-red",
-    "borderL": "border-l-red",
-    "image": "/images/kosibuami.webp"
-  },
-  {
     "title": "Tiket Kapal.com",
     "status": "live",
     "statusColor": "bg-blue",
@@ -18,6 +8,16 @@
     "borderColor": "border-blue",
     "borderL": "border-l-blue",
     "image": "/images/tiketkapal-com.webp"
+  },
+  {
+    "title": "Kos Ibu Ami Petarukan",
+    "status": "live",
+    "statusColor": "bg-red",
+    "desc": "Kos Ibu Ami Petarukan is a simple and comfortable boarding house located in Petarukan. It provides essential facilities, a strategic location, and an easy way for tenants to get information through the website.",
+    "tags": ["Next.js", "Tailwind CSS", "shadcn/ui"],
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
+    "image": "/images/kosibuami.webp"
   },
   {
     "title": "Selfkiosk Pelabuhan",
