@@ -146,6 +146,15 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (min-width: 768px) {
+    .modal-3d-stage {
+      perspective: 3000px;
+    }
+    .modal-3d-card {
+      transform: rotateX(12deg) rotateY(-8deg) rotateZ(1deg) !important;
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

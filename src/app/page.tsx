@@ -106,11 +106,14 @@ export default function Home() {
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
     return () => {
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
     }
   }, [selectedProject])
 
@@ -577,56 +580,57 @@ export default function Home() {
       {/* =============== MODAL =============== */}
       {selectedProject && (
         <div
-          className='bg-ink/90 fixed inset-0 z-50 flex items-center justify-center p-5'
-          style={{ perspective: '3000px' }}
+          className='bg-ink/90 fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 modal-3d-stage overflow-hidden touch-none overscroll-none'
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className={`border-ink shadow-large relative w-full max-w-[800px] border-4 bg-white p-6 md:p-10 ${selectedProject.borderColor} animate-entrance is-visible transition-transform duration-300`}
-            style={{ transform: 'rotateX(12deg) rotateY(-8deg) rotateZ(1deg)' }}
+            className={`border-ink shadow-large flex flex-col relative w-full max-w-[800px] max-h-[85vh] md:max-h-[90vh] border-4 bg-white ${selectedProject.borderColor} animate-entrance is-visible transition-transform duration-300 modal-3d-card`}
             onClick={e => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedProject(null)}
-              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute -top-5 -right-5 flex h-12 w-12 items-center justify-center border-4 text-2xl font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 md:-top-6 md:-right-6 z-50 flex h-9 w-9 md:h-12 md:w-12 items-center justify-center border-2 md:border-4 text-lg md:text-2xl font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
               aria-label='Close modal'
             >
               ✕
             </button>
 
-            <div className='border-ink relative mb-6 flex aspect-video w-full items-center justify-center overflow-hidden border-4 bg-white'>
-              <Image
-                src={selectedProject.image || '/headshot.webp'}
-                alt={selectedProject.title}
-                fill
-                className='object-cover'
-                priority
-              />
-            </div>
+            {/* Content: non-scrollable on mobile (overflow-hidden), scrollable on desktop */}
+            <div className='flex-1 max-md:overflow-hidden md:overflow-y-auto p-4 sm:p-5 md:p-10'>
+              <div className='border-ink relative mb-3 md:mb-6 flex aspect-video w-full items-center justify-center overflow-hidden border-2 md:border-4 bg-white'>
+                <Image
+                  src={selectedProject.image || '/headshot.webp'}
+                  alt={selectedProject.title}
+                  fill
+                  className='object-cover'
+                  priority
+                />
+              </div>
 
-            <div className='mb-4 flex items-center gap-4'>
-              <h3 className='text-[24px] font-black tracking-[0.02em] uppercase md:text-[32px]'>
-                {selectedProject.title}
-              </h3>
-              <div
-                className={`border-ink h-4 w-4 shrink-0 rounded-full border-[3px] ${selectedProject.statusColor}`}
-                title={selectedProject.status}
-              ></div>
-            </div>
+              <div className='mb-2 md:mb-4 flex items-center gap-3 md:gap-4'>
+                <h3 className='text-[18px] sm:text-[24px] md:text-[32px] font-black tracking-[0.02em] uppercase'>
+                  {selectedProject.title}
+                </h3>
+                <div
+                  className={`border-ink h-3.5 w-3.5 md:h-4 md:w-4 shrink-0 rounded-full border-2 md:border-[3px] ${selectedProject.statusColor}`}
+                  title={selectedProject.status}
+                ></div>
+              </div>
 
-            <p className='mb-8 text-[16px] leading-[1.6] font-medium md:text-[18px]'>
-              {selectedProject.desc}
-            </p>
+              <p className='mb-4 md:mb-8 text-[13px] sm:text-[16px] md:text-[18px] leading-[1.5] md:leading-[1.6] font-medium'>
+                {selectedProject.desc}
+              </p>
 
-            <div className='flex flex-wrap gap-2'>
-              {selectedProject.tags.map((tag: string, j: number) => (
-                <span
-                  key={j}
-                  className='border-ink bg-bg border-2 px-3 py-1.5 text-[12px] font-bold tracking-[0.08em] uppercase'
-                >
-                  {tag}
-                </span>
-              ))}
+              <div className='flex flex-wrap gap-1.5 md:gap-2'>
+                {selectedProject.tags.map((tag: string, i: number) => (
+                  <span
+                    key={i}
+                    className='border-ink bg-bg border-1.5 md:border-2 px-2 py-1 md:px-3 md:py-1.5 text-[10px] md:text-[12px] font-bold tracking-[0.08em] uppercase'
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
