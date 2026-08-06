@@ -129,16 +129,16 @@ export default function Home() {
 
   return (
     <>
-      <div className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'>
-      <div
-        ref={planeRef}
-        className='tilted-plane border-ink shadow-large relative w-full max-w-[1200px] border-4 bg-white'
-      >
-        {/* =============== HERO =============== */}
-        <section
-          className='grid min-h-[520px] grid-cols-1 md:grid-cols-2'
-          id='hero'
+      <main className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'>
+        <div
+          ref={planeRef}
+          className='tilted-plane border-ink shadow-large relative w-full max-w-[1200px] border-4 bg-white'
         >
+          {/* =============== HERO =============== */}
+          <section
+            className='grid min-h-[520px] grid-cols-1 md:grid-cols-2'
+            id='hero'
+          >
           <div className='flex flex-col justify-center gap-5 p-8 md:p-10 lg:p-12'>
             <p className='text-red text-[clamp(16px,2vw,22px)] leading-none font-bold tracking-[0.08em] uppercase'>
               Frontend Web Developer
@@ -568,7 +568,7 @@ export default function Home() {
           </div>
         </section>
       </div>
-    </div>
+    </main>
 
     {/* =============== MODAL =============== */}
     {selectedProject && (
