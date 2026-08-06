@@ -100,7 +100,7 @@ export default function Home() {
           className='grid min-h-[520px] grid-cols-1 md:grid-cols-2'
           id='hero'
         >
-          <div className='flex flex-col justify-center gap-6 p-8 md:p-10 lg:p-12'>
+          <div className='flex flex-col justify-center gap-5 p-8 md:p-10 lg:p-12'>
             <p className='text-red text-[clamp(16px,2vw,22px)] leading-none font-bold tracking-[0.08em] uppercase'>
               Frontend Web Developer
             </p>
@@ -110,34 +110,65 @@ export default function Home() {
               Hanifisyafiq
             </h1>
 
-            <div className='mt-2 grid grid-cols-2 gap-3 lg:grid-cols-4'>
-              <div className='border-ink border-l-red border-4 border-l-8 bg-white p-3 text-[11px] font-bold tracking-[0.1em] uppercase'>
-                <span className='text-ink/50 mb-1 block text-[9px] font-medium tracking-[0.15em]'>
-                  Focus
-                </span>
-                Design Systems
+            <div className='grid grid-cols-2 gap-5'>
+              <div className='border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
+                <div className='flex items-center gap-2'>
+                  <svg
+                    className='text-red h-4 w-4'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='2.5'
+                  >
+                    <path d='M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z' />
+                  </svg>
+                  <span className='text-[12px] font-bold tracking-[0.1em] uppercase'>
+                    Focus
+                  </span>
+                </div>
+                <p className='text-ink text-[15px] leading-[1.4] font-medium'>
+                  Currently battling bugs in the javascript universe, especially
+                  on the frontend side of the web.
+                </p>
               </div>
-              <div className='border-ink border-l-blue border-4 border-l-8 bg-white p-3 text-[11px] font-bold tracking-[0.1em] uppercase'>
-                <span className='text-ink/50 mb-1 block text-[9px] font-medium tracking-[0.15em]'>
-                  Focus
-                </span>
-                3D Interfaces
-              </div>
-              <div className='border-ink border-l-yellow border-4 border-l-8 bg-white p-3 text-[11px] font-bold tracking-[0.1em] uppercase'>
-                <span className='text-ink/50 mb-1 block text-[9px] font-medium tracking-[0.15em]'>
-                  Stack
-                </span>
-                WebGL / Three.js
-              </div>
-              <div className='border-ink border-l-red border-4 border-l-8 bg-white p-3 text-[11px] font-bold tracking-[0.1em] uppercase'>
-                <span className='text-ink/50 mb-1 block text-[9px] font-medium tracking-[0.15em]'>
-                  Stack
-                </span>
-                React / Next.js
+              <div className='border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
+                <div className='flex items-center gap-2'>
+                  <svg
+                    className='text-blue h-4 w-4'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    stroke='currentColor'
+                    strokeWidth='2.5'
+                  >
+                    <polygon points='12 2 2 7 12 12 22 7 12 2' />
+                    <polyline points='2 12 12 17 22 12' />
+                    <polyline points='2 17 12 22 22 17' />
+                  </svg>
+                  <span className='text-[12px] font-bold tracking-[0.1em] uppercase'>
+                    Stack
+                  </span>
+                </div>
+                <div className='flex flex-wrap gap-2.5'>
+                  <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
+                    Next
+                  </span>
+                  <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
+                    React
+                  </span>
+                  <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
+                    Typescript
+                  </span>
+                  <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
+                    Javascript
+                  </span>
+                  <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
+                    Tailwind CSS
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className='mt-2 flex flex-wrap gap-3'>
+            <div className='mt-2 flex flex-wrap gap-5'>
               <a
                 href='#projects'
                 className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
@@ -150,6 +181,31 @@ export default function Home() {
               >
                 Contact <span className='text-lg leading-none'>↗</span>
               </a>
+            </div>
+
+            <div className='grid grid-cols-2 gap-5'>
+              <div className='border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
+                <div className='text-[11px] font-bold tracking-[0.1em] uppercase'>
+                  Status
+                </div>
+                <div className='flex items-center justify-between gap-2'>
+                  <div className='text-[14px] leading-tight font-bold md:text-[15px]'>
+                    Open to collabs
+                  </div>
+                  <div className='bg-blue border-ink h-3.5 w-3.5 shrink-0 rounded-full border-[3px] md:h-4 md:w-4'></div>
+                </div>
+              </div>
+              <div className='border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
+                <div className='text-[11px] font-bold tracking-[0.1em] uppercase'>
+                  Location
+                </div>
+                <div className='flex items-center justify-between gap-2'>
+                  <div className='text-[14px] leading-tight font-bold md:text-[15px]'>
+                    Indonesia
+                  </div>
+                  <div className='bg-red border-ink h-3.5 w-3.5 shrink-0 rounded-full border-[3px] md:h-4 md:w-4'></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -222,22 +278,22 @@ export default function Home() {
           {[
             {
               title: 'Approach',
-              desc: 'I believe in the Bauhaus principle that form follows function — but I push it further. Every pixel is a deliberate decision. Every interaction has weight. My work bridges the gap between Constructivist rigor and contemporary digital craft, creating interfaces that feel both timeless and razor-sharp.',
+              desc: 'I believe that compelling visuals must be backed by clean code architecture. Every component is built to be modular, responsive, and performance-driven without sacrificing interface aesthetics.',
               bg: 'bg-white'
             },
             {
               title: 'Background',
-              desc: 'Trained in architecture and computational design, I spent 6 years at leading studios building immersive web experiences for cultural institutions, luxury brands, and technology companies. Now independent, I focus on projects where design systems and creative engineering intersect.',
+              desc: 'Based in Indonesia, focusing on modern frontend web application development. Experienced in building reservation systems, interactive user interfaces, and robust app architectures using React, Next.js, and Tailwind CSS.',
               bg: 'bg-bg'
             },
             {
               title: 'Process',
-              desc: 'Every project begins with constraints. I establish a geometric vocabulary — grid, palette, type scale — then compose within it. The result is work that feels inevitable rather than arbitrary. Rigid systems, expressive outcomes.',
+              desc: 'Starting from deep design system analysis in Figma, translating layouts into reusable TypeScript components, and optimizing rendering performance alongside seamless API integrations.',
               bg: 'bg-white'
             },
             {
-              title: 'Recognition',
-              desc: 'Work featured in Awwwards, FWA, Communication Arts, and Type Directors Club. Speaking engagements at OFFF Barcelona, Typographics NYC, and Beyond Tellerrand. Jury member for CSS Design Awards 2024–2025.',
+              title: 'Services / Capabilities',
+              desc: 'Responsive UI/UX slicing (Mobile-first), REST/Firestore API integration, reusable component architecture, asset & performance optimization, and scalable frontend maintenance.',
               bg: 'bg-bg'
             }
           ].map((card, i) => (
@@ -253,10 +309,10 @@ export default function Home() {
           {/* Stats Row */}
           <div className='col-span-1 grid grid-cols-2 gap-4 md:col-span-2 lg:grid-cols-4'>
             {[
-              { num: '48', label: 'Projects Shipped', color: 'text-red' },
-              { num: '12', label: 'Awards Won', color: 'text-blue' },
-              { num: '6', label: 'Years Experience', color: 'text-yellow' },
-              { num: '∞', label: 'Iterations', color: 'text-ink' }
+              { num: '15+', label: 'Projects Shipped', color: 'text-red' },
+              { num: '∞', label: 'curiosity', color: 'text-ink' },
+              { num: '3+', label: 'Years Experience', color: 'text-yellow' },
+              { num: '∞', label: 'Coffee', color: 'text-ink' }
             ].map((stat, i) => (
               <div
                 key={i}
