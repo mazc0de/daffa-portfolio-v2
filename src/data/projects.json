@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Kos Ibu Ami Petarukan",
+    "status": "live",
+    "statusColor": "bg-red",
+    "desc": "Kos Ibu Ami Petarukan is a simple and comfortable boarding house located in Petarukan. It provides essential facilities, a strategic location, and an easy way for tenants to get information through the website.",
+    "tags": ["Next.js", "Tailwind CSS", "shadcn/ui"],
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
+    "image": "/images/kosibuami.webp"
+  },
+  {
+    "title": "Tiket Kapal.com",
+    "status": "live",
+    "statusColor": "bg-blue",
+    "desc": "Tiketkapal.com is a convenient online platform that helps users book ferry tickets from Bali, Tanjung Pinang, and Batam. It allows users to search schedules and make payments easily and securely.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-blue",
+    "borderL": "border-l-blue",
+    "image": "/images/tiketkapal-com.webp"
+  },
+  {
+    "title": "Selfkiosk Pelabuhan",
+    "status": "live",
+    "statusColor": "bg-yellow",
+    "desc": "A self-service kiosk system located at the port that allows passengers to conveniently browse ferry schedules, select routes, and independently complete their ticket purchase. The kiosk is integrated with the ferry reservation system for seamless transactions and also provides instant ticket printing for passengers.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-yellow",
+    "borderL": "border-l-yellow",
+    "image": "/images/selfkios.webp"
+  },
+  {
+    "title": "Harbor Departure Board",
+    "status": "live",
+    "statusColor": "bg-red",
+    "desc": "A digital departure board commonly found at ports that displays essential ferry information, including vessel name, destination, schedule, gate, status, and remarks. It helps passengers stay updated and informed in real time.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
+    "image": "/images/monitoring.webp"
+  },
+  {
+    "title": "Rodex",
+    "status": "live",
+    "statusColor": "bg-blue",
+    "desc": "Rodex is a train ticket booking application available on the Lifestyle page of myBCA. It is seamlessly integrated with BCA payment services, making it easy and secure for users to search schedules and purchase tickets directly.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-blue",
+    "borderL": "border-l-blue",
+    "image": "/images/rodex2.webp"
+  },
+  {
+    "title": "Mini BMS Lifestyle",
+    "status": "live",
+    "statusColor": "bg-yellow",
+    "desc": "Mini BMS Lifestyle is a ferry ticket booking application similar to Tiketkapal.com, available on the Livin Sukha Lifestyle page. It is directly integrated with Bank Mandiri payment services, enabling users to conveniently search schedules, book tickets, and complete secure transactions.",
+    "tags": ["Next.js", "Tailwind CSS"],
+    "borderColor": "border-yellow",
+    "borderL": "border-l-yellow",
+    "image": "/images/minibms-livin.webp"
+  },
+  {
+    "title": "Astra Visteon",
+    "status": "live",
+    "statusColor": "bg-red",
+    "desc": "This is a web-based application designed to streamline and manage continuous improvement initiatives using the PDCA (Plan-Do-Check-Action) methodology. It helps teams monitor every stage of the improvement cycle with clear visibility, structured workflows, and intuitive tracking tools, enabling more effective problem-solving and sustained operational excellence.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
+    "image": "/images/astra-visteon.webp"
+  },
+  {
+    "title": "SPC Auto Detailing",
+    "status": "live",
+    "statusColor": "bg-blue",
+    "desc": "A landing page designed to showcase a vehicle detailing and coating business. It highlights the services offered—such as premium detailing, paint protection, and high-quality ceramic coating—while presenting a clean, modern layout that builds trust and captures customer interest. The page focuses on visual appeal, clear service information, and strong calls-to-action to help convert visitors into clients.",
+    "tags": ["React.js", "Tailwind CSS"],
+    "borderColor": "border-blue",
+    "borderL": "border-l-blue",
+    "image": "/images/spc-autodetailing.webp"
+  }
+]

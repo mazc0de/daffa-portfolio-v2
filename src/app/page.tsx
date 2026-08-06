@@ -1,10 +1,24 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import projectsData from '../data/projects.json'
+
+interface Project {
+  title: string
+  status: string
+  statusColor: string
+  desc: string
+  tags: string[]
+  borderColor: string
+  borderL: string
+  image?: string
+}
 
 export default function Home() {
   const planeRef = useRef<HTMLDivElement>(null)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [showAllProjects, setShowAllProjects] = useState(false)
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -89,8 +103,33 @@ export default function Home() {
     }
   }, [])
 
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [selectedProject])
+
+  useEffect(() => {
+    if (showAllProjects) {
+      setTimeout(() => {
+        const newCards = document.querySelectorAll('#projects .animate-entrance:not(.is-visible)')
+        newCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.classList.add('is-visible')
+          }, index * 80)
+        })
+      }, 50)
+    }
+  }, [showAllProjects])
+
   return (
-    <div className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'>
+    <>
+      <div className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'>
       <div
         ref={planeRef}
         className='tilted-plane border-ink shadow-large relative w-full max-w-[1200px] border-4 bg-white'
@@ -366,65 +405,11 @@ export default function Home() {
           </div>
 
           <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
-            {[
-              {
-                title: 'Manifesto Engine',
-                status: 'live',
-                statusColor: 'bg-red',
-                desc: 'A generative typography tool that transforms manifestos into animated Constructivist posters. Real-time WebGL rendering with custom shader pipeline.',
-                tags: ['WebGL', 'GLSL', 'React', 'Node.js'],
-                borderColor: 'border-red',
-                borderL: 'border-l-red'
-              },
-              {
-                title: 'Spatial Archive',
-                status: 'live',
-                statusColor: 'bg-red',
-                desc: "3D spatial interface for a museum's digital archive. Users navigate 12,000+ artifacts in a procedurally generated architectural space. Featured at Ars Electronica 2024.",
-                tags: ['Three.js', 'Next.js', 'Postgres', 'R3F'],
-                borderColor: 'border-blue',
-                borderL: 'border-l-blue'
-              },
-              {
-                title: 'Grid Protocol',
-                status: 'dev',
-                statusColor: 'bg-yellow',
-                desc: 'Open-source design system framework built on strict geometric primitives. Binary border-radius, hard shadows, primary palette. Used by 200+ developers.',
-                tags: ['TypeScript', 'CSS', 'Figma API', 'Open Source'],
-                borderColor: 'border-yellow',
-                borderL: 'border-l-yellow'
-              },
-              {
-                title: 'Kinetic Identity',
-                status: 'live',
-                statusColor: 'bg-red',
-                desc: 'Dynamic visual identity system for a Berlin-based architecture firm. Responsive logo generates unique compositions based on viewport and time of day.',
-                tags: ['SVG', 'Canvas', 'Vue', 'Branding'],
-                borderColor: 'border-red',
-                borderL: 'border-l-red'
-              },
-              {
-                title: 'Neue Galerie',
-                status: 'archive',
-                statusColor: 'bg-blue',
-                desc: "Exhibition website for a Bauhaus retrospective. Full-screen immersive scroll experience with parallax compositions honoring the original movement's principles.",
-                tags: ['GSAP', 'Nuxt', 'Headless CMS'],
-                borderColor: 'border-blue',
-                borderL: 'border-l-blue'
-              },
-              {
-                title: 'Type Foundry OS',
-                status: 'dev',
-                statusColor: 'bg-yellow',
-                desc: 'Web-based type design environment with real-time variable font preview, OpenType feature testing, and collaborative editing for distributed type design teams.',
-                tags: ['Rust / WASM', 'Canvas', 'WebRTC'],
-                borderColor: 'border-yellow',
-                borderL: 'border-l-yellow'
-              }
-            ].map((proj, i) => (
+            {(showAllProjects ? projectsData : projectsData.slice(0, 6)).map((proj, i) => (
               <article
                 key={i}
-                className={`animate-entrance shadow-base hover:shadow-hover flex flex-col border-4 bg-white transition-transform hover:-translate-x-[1px] hover:-translate-y-[1px] ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
+                onClick={() => setSelectedProject(proj)}
+                className={`animate-entrance shadow-base hover:shadow-hover flex cursor-pointer flex-col border-4 bg-white transition-transform hover:-translate-x-[1px] hover:-translate-y-[1px] ${proj.borderColor} border-l-[8px] ${proj.borderL} relative z-20`}
               >
                 <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
                   <h3 className='text-[18px] font-bold tracking-[0.02em] uppercase'>
@@ -453,6 +438,17 @@ export default function Home() {
               </article>
             ))}
           </div>
+
+          {!showAllProjects && projectsData.length > 6 && (
+            <div className='mt-10 flex justify-center'>
+              <button
+                onClick={() => setShowAllProjects(true)}
+                className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center justify-center border-4 px-8 py-3 text-[14px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+              >
+                Show More Projects
+              </button>
+            </div>
+          )}
         </section>
 
         <div className='bg-ink h-1 w-full shrink-0'></div>
@@ -573,5 +569,55 @@ export default function Home() {
         </section>
       </div>
     </div>
+
+    {/* =============== MODAL =============== */}
+    {selectedProject && (
+      <div 
+        className='fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-5' 
+        style={{ perspective: '3000px' }}
+        onClick={() => setSelectedProject(null)}
+      >
+        <div 
+          className={`relative w-full max-w-[800px] border-ink shadow-large border-4 bg-white p-6 md:p-10 ${selectedProject.borderColor} transition-transform duration-300 animate-entrance is-visible`} 
+          style={{ transform: 'rotateX(12deg) rotateY(-8deg) rotateZ(1deg)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button 
+            onClick={() => setSelectedProject(null)}
+            className='border-ink shadow-base hover:shadow-hover active:shadow-press absolute -top-5 -right-5 flex h-12 w-12 items-center justify-center border-4 bg-yellow text-2xl font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+            aria-label="Close modal"
+          >
+            ✕
+          </button>
+          
+          <div className='border-ink relative mb-6 flex aspect-video w-full items-center justify-center overflow-hidden border-4 bg-white'>
+             <Image src={selectedProject.image || '/headshot.webp'} alt={selectedProject.title} fill className='object-cover' priority />
+          </div>
+
+          <div className='mb-4 flex items-center gap-4'>
+            <h3 className='text-[24px] font-black tracking-[0.02em] uppercase md:text-[32px]'>
+              {selectedProject.title}
+            </h3>
+            <div className={`border-ink h-4 w-4 shrink-0 rounded-full border-[3px] ${selectedProject.statusColor}`} title={selectedProject.status}></div>
+          </div>
+          
+          <p className='mb-8 text-[16px] leading-[1.6] font-medium md:text-[18px]'>
+            {selectedProject.desc}
+          </p>
+          
+          <div className='flex flex-wrap gap-2'>
+            {selectedProject.tags.map((tag: string, j: number) => (
+              <span
+                key={j}
+                className='border-ink bg-bg border-2 px-3 py-1.5 text-[12px] font-bold tracking-[0.08em] uppercase'
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  </>
   )
 }
