@@ -602,6 +602,7 @@ export default function Home() {
                   src={selectedProject.image || '/headshot.webp'}
                   alt={selectedProject.title}
                   fill
+                  sizes='(max-width: 768px) 100vw, 800px'
                   className='object-cover'
                   priority
                 />
