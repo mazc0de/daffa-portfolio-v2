@@ -309,14 +309,34 @@ export default function Home() {
           {/* Stats Row */}
           <div className='col-span-1 grid grid-cols-2 gap-4 md:col-span-2 lg:grid-cols-4'>
             {[
-              { num: '15+', label: 'Projects Shipped', color: 'text-red' },
-              { num: '∞', label: 'curiosity', color: 'text-ink' },
-              { num: '3+', label: 'Years Experience', color: 'text-yellow' },
-              { num: '∞', label: 'Coffee', color: 'text-ink' }
+              {
+                num: '15+',
+                label: 'Projects Shipped',
+                color: 'text-red',
+                order: 'order-1 lg:order-1'
+              },
+              {
+                num: '∞',
+                label: 'curiosity',
+                color: 'text-ink',
+                order: 'order-2 lg:order-2'
+              },
+              {
+                num: '3+',
+                label: 'Years Experience',
+                color: 'text-yellow',
+                order: 'order-4 lg:order-3'
+              },
+              {
+                num: '∞',
+                label: 'Coffee',
+                color: 'text-ink',
+                order: 'order-3 lg:order-4'
+              }
             ].map((stat, i) => (
               <div
                 key={i}
-                className='animate-entrance border-ink border-4 bg-white p-5 text-center'
+                className={`animate-entrance border-ink border-4 bg-white p-5 text-center ${stat.order}`}
               >
                 <div
                   className={`text-4xl leading-none font-black ${stat.color}`}
@@ -449,24 +469,25 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+          <div className='mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2'>
             {[
               {
                 icon: '@',
                 label: 'Email',
-                sub: 'hello@alexeivolkov.dev',
-                link: 'mailto:hello@alexeivolkov.dev',
+                sub: 'daffahan29@gmail.com',
+                link: 'mailto:daffahan29@gmail.com',
                 iconBg: 'bg-red',
                 iconColor: 'text-white'
               },
               {
                 icon: 'GH',
                 label: 'GitHub',
-                sub: '@alexei-volkov',
-                link: '#',
-                iconBg: 'bg-blue',
+                sub: 'github.com/mazc0de',
+                link: 'https://github.com/mazc0de',
+                iconBg: 'bg-ink',
                 iconColor: 'text-white'
               },
+              /*
               {
                 icon: 'TW',
                 label: 'Twitter / X',
@@ -475,14 +496,16 @@ export default function Home() {
                 iconBg: 'bg-yellow',
                 iconColor: 'text-ink'
               },
+              */
               {
-                icon: 'LI',
+                icon: 'in',
                 label: 'LinkedIn',
-                sub: '/in/alexei-volkov',
-                link: '#',
-                iconBg: 'bg-ink',
+                sub: 'Daffa Hanifisyafiq',
+                link: 'https://www.linkedin.com/in/daffahan/',
+                iconBg: 'bg-blue',
                 iconColor: 'text-white'
               },
+              /*
               {
                 icon: 'DR',
                 label: 'Dribbble',
@@ -491,12 +514,13 @@ export default function Home() {
                 iconBg: 'bg-red',
                 iconColor: 'text-white'
               },
+              */
               {
-                icon: 'RE',
+                icon: 'CV',
                 label: 'Read.cv',
-                sub: 'alexei.volkov',
+                sub: 'daffa',
                 link: '#',
-                iconBg: 'bg-blue',
+                iconBg: 'bg-yellow',
                 iconColor: 'text-white'
               }
             ].map((conn, i) => (
