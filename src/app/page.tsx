@@ -13,6 +13,7 @@ interface Project {
   borderColor: string
   borderL: string
   image?: string
+  link?: string
 }
 
 export default function Home() {
@@ -89,6 +90,9 @@ export default function Home() {
 
               setTimeout(() => {
                 entry.target.classList.add('is-visible')
+                setTimeout(() => {
+                  entry.target.classList.remove('animate-entrance')
+                }, 450)
               }, delay)
 
               observer.unobserve(entry.target)
@@ -153,6 +157,9 @@ export default function Home() {
         newCards.forEach((card, index) => {
           setTimeout(() => {
             card.classList.add('is-visible')
+            setTimeout(() => {
+              card.classList.remove('animate-entrance')
+            }, 450)
           }, index * 80)
         })
       }, 50)
@@ -445,9 +452,9 @@ export default function Home() {
               style={{ transformStyle: 'preserve-3d' }}
             >
               {(showAllProjects ? projectsData : projectsData.slice(0, 6)).map(
-                (proj, i) => (
+                proj => (
                   <div
-                    key={i}
+                    key={proj.title}
                     className='animate-entrance h-full w-full'
                     style={{ transformStyle: 'preserve-3d' }}
                   >
@@ -464,12 +471,27 @@ export default function Home() {
                       aria-label={`View project: ${proj.title}`}
                     >
                       <article
-                        className={`shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-transform group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
+                        className={`shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-all duration-200 group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
                       >
                         <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
-                          <h3 className='text-[18px] font-bold tracking-[0.02em] uppercase'>
-                            {proj.title}
-                          </h3>
+                          <div className='flex items-center gap-2.5 min-w-0 pr-2'>
+                            <h3 className='text-[18px] font-bold tracking-[0.02em] uppercase truncate'>
+                              {proj.title}
+                            </h3>
+                            {proj.link && proj.link !== '#' && (
+                              <a
+                                href={proj.link}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                onClick={e => e.stopPropagation()}
+                                className='border-ink bg-bg hover:bg-yellow hover:text-ink text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] font-black leading-none transition-transform duration-150 hover:-translate-y-0.5'
+                                title={`Visit ${proj.title}`}
+                                aria-label={`Visit ${proj.title}`}
+                              >
+                                ↗
+                              </a>
+                            )}
+                          </div>
                           <div
                             className={`border-ink h-3.5 w-3.5 shrink-0 rounded-full border-2 ${proj.statusColor}`}
                             title={proj.status}
@@ -639,10 +661,21 @@ export default function Home() {
                 />
               </div>
 
-              <div className='mb-2 md:mb-4 flex items-center gap-3 md:gap-4'>
+              <div className='mb-2 md:mb-4 flex flex-wrap items-center gap-3 md:gap-4'>
                 <h3 className='text-[18px] sm:text-[24px] md:text-[32px] font-black tracking-[0.02em] uppercase'>
                   {selectedProject.title}
                 </h3>
+                {selectedProject.link && selectedProject.link !== '#' && (
+                  <a
+                    href={selectedProject.link}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='border-ink bg-yellow hover:bg-red text-ink hover:text-white shadow-base inline-flex items-center gap-1.5 border-2 md:border-4 px-3 py-1 text-[12px] md:text-[14px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px]'
+                    title={`Visit ${selectedProject.title}`}
+                  >
+                    Visit Site <span className='text-sm md:text-base leading-none'>↗</span>
+                  </a>
+                )}
                 <div
                   className={`border-ink h-3.5 w-3.5 md:h-4 md:w-4 shrink-0 rounded-full border-2 md:border-[3px] ${selectedProject.statusColor}`}
                   title={selectedProject.status}

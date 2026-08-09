@@ -7,7 +7,8 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-blue",
     "borderL": "border-l-blue",
-    "image": "/images/tiketkapal-com.webp"
+    "image": "/images/tiketkapal-com.webp",
+    "link": "https://tiketkapal.com/"
   },
   {
     "title": "Kos Ibu Ami Petarukan",
@@ -17,7 +18,8 @@
     "tags": ["Next.js", "Tailwind CSS", "shadcn/ui"],
     "borderColor": "border-red",
     "borderL": "border-l-red",
-    "image": "/images/kosibuami.webp"
+    "image": "/images/kosibuami.webp",
+    "link": "https://kosibuami.my.id/"
   },
   {
     "title": "Selfkiosk Pelabuhan",
@@ -27,7 +29,8 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-yellow",
     "borderL": "border-l-yellow",
-    "image": "/images/selfkios.webp"
+    "image": "/images/selfkios.webp",
+    "link": "#"
   },
   {
     "title": "Harbor Departure Board",
@@ -37,7 +40,8 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-red",
     "borderL": "border-l-red",
-    "image": "/images/monitoring.webp"
+    "image": "/images/monitoring.webp",
+    "link": "#"
   },
   {
     "title": "Rodex",
@@ -47,7 +51,8 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-blue",
     "borderL": "border-l-blue",
-    "image": "/images/rodex2.webp"
+    "image": "/images/rodex2.webp",
+    "link": "#"
   },
   {
     "title": "Mini BMS Lifestyle",
@@ -57,7 +62,8 @@
     "tags": ["Next.js", "Tailwind CSS"],
     "borderColor": "border-yellow",
     "borderL": "border-l-yellow",
-    "image": "/images/minibms-livin.webp"
+    "image": "/images/minibms-livin.webp",
+    "link": "#"
   },
   {
     "title": "Astra Visteon",
@@ -67,7 +73,8 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-red",
     "borderL": "border-l-red",
-    "image": "/images/astra-visteon.webp"
+    "image": "/images/astra-visteon.webp",
+    "link": "#"
   },
   {
     "title": "SPC Auto Detailing",
@@ -77,6 +84,7 @@
     "tags": ["React.js", "Tailwind CSS"],
     "borderColor": "border-blue",
     "borderL": "border-l-blue",
-    "image": "/images/spc-autodetailing.webp"
+    "image": "/images/spc-autodetailing.webp",
+    "link": "#"
   }
 ]
