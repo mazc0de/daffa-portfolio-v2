@@ -21,6 +21,12 @@ export default function Home() {
   const [showAllProjects, setShowAllProjects] = useState(false)
 
   useEffect(() => {
+    // --- Force scroll to top on page access / reload ---
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+    window.scrollTo(0, 0)
+
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
     ).matches
@@ -98,6 +104,27 @@ export default function Home() {
       animatedElements.forEach(el => observer.observe(el))
     }
 
+    // --- Puzzle drop animation cleanup after completion ---
+    if (!prefersReducedMotion) {
+      const puzzleElements = document.querySelectorAll(
+        '[class*="animate-puzzle"], [class*="animate-text-puzzle"]'
+      )
+      puzzleElements.forEach(el => {
+        const handleEnd = () => {
+          el.classList.remove(
+            'animate-puzzle',
+            'animate-puzzle-left',
+            'animate-puzzle-right',
+            'animate-text-puzzle'
+          )
+          ;(el as HTMLElement).style.animation = 'none'
+          ;(el as HTMLElement).style.opacity = '1'
+          ;(el as HTMLElement).style.transform = ''
+        }
+        el.addEventListener('animationend', handleEnd, { once: true })
+      })
+    }
+
     return () => {
       window.removeEventListener('scroll', updateTilt)
     }
@@ -145,17 +172,21 @@ export default function Home() {
             id='hero'
           >
             <div className='flex flex-col justify-center gap-5 p-8 md:p-10 lg:p-12'>
-              <p className='text-red text-[clamp(16px,2vw,22px)] leading-none font-bold tracking-[0.08em] uppercase'>
+              <p className='animate-text-puzzle puzzle-delay-0 text-red text-[clamp(16px,2vw,22px)] leading-none font-bold tracking-[0.08em] uppercase'>
                 Frontend Web Developer
               </p>
               <h1 className='text-[clamp(40px,6vw,68px)] leading-[0.95] font-black tracking-[-0.04em] uppercase'>
-                Daffa
+                <span className='animate-text-puzzle puzzle-delay-1 inline-block'>
+                  Daffa
+                </span>
                 <br />
-                Hanifisyafiq
+                <span className='animate-text-puzzle puzzle-delay-2 inline-block'>
+                  Hanifisyafiq
+                </span>
               </h1>
 
               <div className='grid grid-cols-2 gap-5'>
-                <div className='border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
+                <div className='animate-puzzle-left puzzle-delay-1 border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
                   <div className='flex items-center gap-2'>
                     <svg
                       className='text-red h-4 w-4'
@@ -175,7 +206,7 @@ export default function Home() {
                     especially on the frontend side of the web.
                   </p>
                 </div>
-                <div className='border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
+                <div className='animate-puzzle-right puzzle-delay-2 border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
                   <div className='flex items-center gap-2'>
                     <svg
                       className='text-blue h-4 w-4'
@@ -215,20 +246,20 @@ export default function Home() {
               <div className='mt-2 flex flex-wrap gap-5'>
                 <a
                   href='#projects'
-                  className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  className='animate-puzzle puzzle-delay-3 border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   View Work <span className='text-lg leading-none'>→</span>
                 </a>
                 <a
                   href='#connect'
-                  className='border-ink shadow-base hover:shadow-hover active:shadow-press text-ink inline-flex cursor-pointer items-center gap-2 border-4 bg-white px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  className='animate-puzzle puzzle-delay-4 border-ink shadow-base hover:shadow-hover active:shadow-press text-ink inline-flex cursor-pointer items-center gap-2 border-4 bg-white px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   Contact <span className='text-lg leading-none'>↗</span>
                 </a>
               </div>
 
               <div className='grid grid-cols-2 gap-5'>
-                <div className='border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
+                <div className='animate-puzzle-left puzzle-delay-5 border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
                   <div className='text-[11px] font-bold tracking-[0.1em] uppercase'>
                     Status
                   </div>
@@ -239,7 +270,7 @@ export default function Home() {
                     <div className='bg-blue border-ink h-3.5 w-3.5 shrink-0 rounded-full border-[3px] md:h-4 md:w-4'></div>
                   </div>
                 </div>
-                <div className='border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
+                <div className='animate-puzzle-right puzzle-delay-6 border-ink shadow-base flex min-h-[90px] flex-col justify-between gap-3 border-4 bg-white p-4 md:p-5'>
                   <div className='text-[11px] font-bold tracking-[0.1em] uppercase'>
                     Location
                   </div>
@@ -255,9 +286,9 @@ export default function Home() {
 
             {/* Composition Box */}
             <div className='border-ink relative grid min-h-[380px] grid-cols-12 grid-rows-12 overflow-hidden border-t-4 md:min-h-[480px] md:border-t-0 md:border-l-4'>
-              <div className='comp-red bg-red z-10'></div>
-              <div className='comp-yellow bg-yellow z-10'></div>
-              <div className='comp-oval-wrapper z-20 flex items-center justify-center'>
+              <div className='comp-red bg-red z-10 animate-puzzle-left puzzle-delay-1'></div>
+              <div className='comp-yellow bg-yellow z-10 animate-puzzle-right puzzle-delay-5'></div>
+              <div className='comp-oval-wrapper z-20 flex items-center justify-center animate-puzzle puzzle-delay-3'>
                 <div className='bg-blue border-ink flex aspect-[3/4] w-[200px] items-center justify-center overflow-hidden rounded-full border-4 md:w-[280px]'>
                   <Image
                     src='/headshot.webp'
@@ -288,15 +319,15 @@ export default function Home() {
               ></div>
               {/* Accent marks */}
               <div
-                className='bg-ink absolute z-40 h-5 w-5 rounded-full'
+                className='animate-puzzle puzzle-delay-6 bg-ink absolute z-40 h-5 w-5 rounded-full'
                 style={{ top: 'calc(33% - 10px)', left: 'calc(41.6% - 10px)' }}
               ></div>
               <div
-                className='bg-ink absolute z-40 h-5 w-5 rounded-full'
+                className='animate-puzzle puzzle-delay-7 bg-ink absolute z-40 h-5 w-5 rounded-full'
                 style={{ bottom: '12%', right: '10%' }}
               ></div>
               <div
-                className="bg-ink after:bg-ink absolute z-40 h-1 w-6 after:absolute after:-top-[10px] after:left-[10px] after:h-6 after:w-1 after:content-['']"
+                className="animate-puzzle puzzle-delay-5 bg-ink after:bg-ink absolute z-40 h-1 w-6 after:absolute after:-top-[10px] after:left-[10px] after:h-6 after:w-1 after:content-['']"
                 style={{ top: '8%', right: '14%' }}
               ></div>
             </div>
