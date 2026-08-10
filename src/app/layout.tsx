@@ -88,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' data-scroll-behavior="smooth" suppressHydrationWarning>
       <body
         className={`${outfit.variable} grain-overlay`}
         suppressHydrationWarning

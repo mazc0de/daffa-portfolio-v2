@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import projectsData from '../data/projects.json'
+import { BlogPost } from '@/types/blog'
+import { fetchPosts } from '@/lib/blog-service'
 
 interface Project {
   title: string
@@ -20,6 +22,19 @@ export default function Home() {
   const planeRef = useRef<HTMLDivElement>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [showAllProjects, setShowAllProjects] = useState(false)
+
+  const [homePosts, setHomePosts] = useState<BlogPost[]>([])
+  const [isHomeLoading, setIsHomeLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    async function loadHomePosts() {
+      setIsHomeLoading(true)
+      const data = await fetchPosts(false)
+      setHomePosts(data)
+      setIsHomeLoading(false)
+    }
+    loadHomePosts()
+  }, [])
 
   useEffect(() => {
     // --- Force scroll to top on page access / reload ---
@@ -529,6 +544,72 @@ export default function Home() {
                 </button>
               </div>
             )}
+          </section>
+
+          <div className='bg-ink h-1 w-full shrink-0'></div>
+
+          {/* =============== BLOG / JOURNAL =============== */}
+          <section className='p-6 md:p-10 lg:p-14 bg-[#FFFDF7]' id='blog'>
+            <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
+              <div className='flex items-start gap-4'>
+                <div className='bg-red border-ink h-12 w-12 shrink-0 border-4'></div>
+                <div>
+                  <h2>Blog & Journal</h2>
+                  <p className='text-ink/50 mt-2 text-[14px] leading-none font-bold tracking-[0.08em] uppercase'>
+                    Technical Writing, Engineering Articles, Tips & Tricks, Journey & Personal Journal
+                  </p>
+                </div>
+              </div>
+
+              <div className='flex items-center gap-3'>
+                <a
+                  href='/blog'
+                  className='border-ink shadow-base bg-yellow text-ink hover:bg-blue hover:text-white inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                >
+                  View All Articles ↗
+                </a>
+              </div>
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+              {isHomeLoading ? (
+                <div className='border-ink shadow-base bg-white border-4 p-8 text-center col-span-full'>
+                  <div className='inline-block w-6 h-6 border-4 border-ink border-t-red animate-spin mb-2' />
+                  <p className='font-black uppercase text-xs'>LOADING ARTICLES...</p>
+                </div>
+              ) : homePosts.length === 0 ? (
+                <div className='border-ink shadow-base bg-white border-4 p-8 flex flex-col items-center justify-center text-center space-y-3 col-span-full min-h-[200px]'>
+                  <h3 className='text-xl font-black uppercase text-center'>NO ARTICLES PUBLISHED YET</h3>
+                  <p className='text-ink/70 text-sm font-medium text-center max-w-md'>
+                    Check back soon for technical writing, engineering articles, tips & tricks, and personal journey posts.
+                  </p>
+                </div>
+              ) : (
+                homePosts.slice(0, 2).map((post, idx) => (
+                  <div key={post.id} className='border-ink shadow-base bg-white border-4 p-6 flex flex-col justify-between space-y-4'>
+                    <div className='space-y-2'>
+                      <span className={`text-white px-2 py-0.5 border-2 border-ink text-xs font-black uppercase inline-block ${idx % 2 === 0 ? 'bg-blue' : 'bg-red'}`}>
+                        {post.category}
+                      </span>
+                      <h3 className='text-xl font-black uppercase tracking-tight text-ink'>
+                        <a href={`/blog/${post.slug}`} className='hover:text-blue'>
+                          {post.title}
+                        </a>
+                      </h3>
+                      <p className='text-ink text-sm font-medium leading-relaxed line-clamp-3'>
+                        {post.excerpt}
+                      </p>
+                    </div>
+                    <div className='pt-2 border-t-2 border-ink flex items-center justify-between text-xs font-bold'>
+                      <span>{post.read_time}</span>
+                      <a href={`/blog/${post.slug}`} className='font-black uppercase text-red hover:underline'>
+                        READ POST →
+                      </a>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </section>
 
           <div className='bg-ink h-1 w-full shrink-0'></div>
