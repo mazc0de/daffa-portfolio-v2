@@ -8,7 +8,7 @@ const INITIAL_SEED_CATEGORIES: BlogCategory[] = [
     slug: 'engineering',
     color: '#D02020',
     description: 'Software development, React 19 & architecture',
-    created_at: '2026-08-01T10:00:00.000Z',
+    created_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: 'seed-cat-2',
@@ -16,7 +16,7 @@ const INITIAL_SEED_CATEGORIES: BlogCategory[] = [
     slug: 'design',
     color: '#1040C0',
     description: 'Bauhaus UI, spatial design systems & CSS',
-    created_at: '2026-08-01T10:00:00.000Z',
+    created_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: 'seed-cat-3',
@@ -24,7 +24,7 @@ const INITIAL_SEED_CATEGORIES: BlogCategory[] = [
     slug: 'thoughts',
     color: '#F0C020',
     description: 'Career insights and engineering philosophy',
-    created_at: '2026-08-01T10:00:00.000Z',
+    created_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: 'seed-cat-4',
@@ -32,7 +32,7 @@ const INITIAL_SEED_CATEGORIES: BlogCategory[] = [
     slug: 'tutorial',
     color: '#121212',
     description: 'Step by step guides and code walkthroughs',
-    created_at: '2026-08-01T10:00:00.000Z',
+    created_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: 'seed-cat-5',
@@ -40,8 +40,8 @@ const INITIAL_SEED_CATEGORIES: BlogCategory[] = [
     slug: 'general',
     color: '#1040C0',
     description: 'General updates and announcements',
-    created_at: '2026-08-01T10:00:00.000Z',
-  },
+    created_at: '2026-08-01T10:00:00.000Z'
+  }
 ]
 
 const CATEGORIES_STORAGE_KEY = 'daffa_portfolio_blog_categories_v1'
@@ -51,7 +51,10 @@ function getLocalCategories(): BlogCategory[] {
   try {
     const raw = localStorage.getItem(CATEGORIES_STORAGE_KEY)
     if (!raw) {
-      localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(INITIAL_SEED_CATEGORIES))
+      localStorage.setItem(
+        CATEGORIES_STORAGE_KEY,
+        JSON.stringify(INITIAL_SEED_CATEGORIES)
+      )
       return INITIAL_SEED_CATEGORIES
     }
     return JSON.parse(raw)
@@ -82,7 +85,10 @@ export async function fetchCategories(): Promise<BlogCategory[]> {
         return data as BlogCategory[]
       }
       if (error) {
-        console.warn('Supabase categories fetch error, fallback local:', error.message)
+        console.warn(
+          'Supabase categories fetch error, fallback local:',
+          error.message
+        )
       }
     } catch (err) {
       console.warn('Supabase categories exception, fallback local:', err)
@@ -100,7 +106,10 @@ export async function saveCategory(
   const name = category.name?.trim().toUpperCase() || 'NEW CATEGORY'
   const slug =
     category.slug?.trim().toLowerCase() ||
-    name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
   const color = category.color || '#1040C0'
   const description = category.description?.trim() || ''
 
@@ -113,7 +122,7 @@ export async function saveCategory(
             name,
             slug,
             color,
-            description,
+            description
           })
           .select()
           .single()
@@ -127,7 +136,7 @@ export async function saveCategory(
             name,
             slug,
             color,
-            description,
+            description
           })
           .eq('id', category.id)
           .select()
@@ -137,7 +146,10 @@ export async function saveCategory(
         return { success: true, data: data as BlogCategory }
       }
     } catch (err: any) {
-      console.warn('Supabase saveCategory error, writing fallback local:', err.message || err)
+      console.warn(
+        'Supabase saveCategory error, writing fallback local:',
+        err.message || err
+      )
     }
   }
 
@@ -152,7 +164,7 @@ export async function saveCategory(
       slug,
       color,
       description,
-      created_at: now,
+      created_at: now
     }
     local.push(resultCategory)
   } else {
@@ -163,7 +175,7 @@ export async function saveCategory(
         name,
         slug,
         color,
-        description,
+        description
       }
       local[idx] = resultCategory
     } else {
@@ -173,7 +185,7 @@ export async function saveCategory(
         slug,
         color,
         description,
-        created_at: now,
+        created_at: now
       }
       local.push(resultCategory)
     }
@@ -183,13 +195,18 @@ export async function saveCategory(
   return { success: true, data: resultCategory }
 }
 
-export async function deleteCategory(id: string): Promise<{ success: boolean; error?: string }> {
+export async function deleteCategory(
+  id: string
+): Promise<{ success: boolean; error?: string }> {
   if (isSupabaseConfigured() && supabase) {
     try {
       const { error } = await supabase.from('categories').delete().eq('id', id)
       if (error) throw error
     } catch (err: any) {
-      console.warn('Supabase deleteCategory error, fallback local:', err.message || err)
+      console.warn(
+        'Supabase deleteCategory error, fallback local:',
+        err.message || err
+      )
     }
   }
 

@@ -93,7 +93,8 @@ export default function BlogIndexPage() {
             </h1>
 
             <p className='text-lg leading-relaxed font-medium text-[#121212]'>
-              A collection of technical writing, engineering articles, tips & tricks, and personal journey notes.
+              A collection of technical writing, engineering articles, tips &
+              tricks, and personal journey notes.
             </p>
           </div>
         </div>

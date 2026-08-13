@@ -51,7 +51,7 @@ Stay tuned as we dive deeper into spatial web performance!`,
     likes: 18,
     published: true,
     created_at: '2026-08-01T10:00:00.000Z',
-    updated_at: '2026-08-01T10:00:00.000Z',
+    updated_at: '2026-08-01T10:00:00.000Z'
   },
   {
     id: 'seed-post-2',
@@ -106,7 +106,7 @@ By keeping heavy dependencies on the server, your initial bundle size drops dras
     likes: 24,
     published: true,
     created_at: '2026-08-05T14:30:00.000Z',
-    updated_at: '2026-08-05T14:30:00.000Z',
+    updated_at: '2026-08-05T14:30:00.000Z'
   },
   {
     id: 'seed-post-3',
@@ -156,8 +156,8 @@ Write once, publish anywhere!`,
     likes: 12,
     published: true,
     created_at: '2026-08-08T09:15:00.000Z',
-    updated_at: '2026-08-08T09:15:00.000Z',
-  },
+    updated_at: '2026-08-08T09:15:00.000Z'
+  }
 ]
 
 const STORAGE_KEY = 'daffa_portfolio_blog_posts_v1'
@@ -222,19 +222,25 @@ function saveLocalPosts(posts: BlogPost[]): void {
 export async function fetchPosts(includeDrafts = false): Promise<BlogPost[]> {
   if (isSupabaseConfigured() && supabase) {
     try {
-      let query = supabase.from('posts').select('*').order('created_at', { ascending: false })
+      let query = supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false })
       if (!includeDrafts) {
         query = query.eq('published', true)
       }
       const { data, error } = await query
       if (error) {
-        console.warn('Supabase query error, falling back to local posts:', error.message)
+        console.warn(
+          'Supabase query error, falling back to local posts:',
+          error.message
+        )
         return getLocalPosts().filter(p => includeDrafts || p.published)
       }
       if (data && data.length > 0) {
         return data.map(p => ({
           ...p,
-          likes: p.likes ?? 0,
+          likes: p.likes ?? 0
         })) as BlogPost[]
       }
     } catch (err) {
@@ -244,10 +250,12 @@ export async function fetchPosts(includeDrafts = false): Promise<BlogPost[]> {
 
   // Fallback mode
   const local = getLocalPosts()
-  return local.filter(p => includeDrafts || p.published).map(p => ({
-    ...p,
-    likes: p.likes ?? 0,
-  }))
+  return local
+    .filter(p => includeDrafts || p.published)
+    .map(p => ({
+      ...p,
+      likes: p.likes ?? 0
+    }))
 }
 
 export async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -262,7 +270,7 @@ export async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
       if (!error && data) {
         return {
           ...data,
-          likes: data.likes ?? 0,
+          likes: data.likes ?? 0
         } as BlogPost
       }
     } catch (err) {
@@ -275,11 +283,13 @@ export async function fetchPostBySlug(slug: string): Promise<BlogPost | null> {
   if (!found) return null
   return {
     ...found,
-    likes: found.likes ?? 0,
+    likes: found.likes ?? 0
   }
 }
 
-export async function togglePostLove(postId: string): Promise<{ success: boolean; newLikes: number; isLoved: boolean }> {
+export async function togglePostLove(
+  postId: string
+): Promise<{ success: boolean; newLikes: number; isLoved: boolean }> {
   const currentlyLoved = hasUserLovedPost(postId)
   const nextLoved = !currentlyLoved
   setUserLovedPost(postId, nextLoved)
@@ -296,7 +306,10 @@ export async function togglePostLove(postId: string): Promise<{ success: boolean
         .single()
 
       const currentLikes = currentPost?.likes ?? 0
-      newLikesCount = Math.max(0, nextLoved ? currentLikes + 1 : currentLikes - 1)
+      newLikesCount = Math.max(
+        0,
+        nextLoved ? currentLikes + 1 : currentLikes - 1
+      )
 
       await supabase
         .from('posts')
@@ -312,7 +325,10 @@ export async function togglePostLove(postId: string): Promise<{ success: boolean
   const idx = local.findIndex(p => p.id === postId)
   if (idx !== -1) {
     const currentLikes = local[idx].likes ?? 0
-    const calcLikes = Math.max(0, nextLoved ? currentLikes + 1 : currentLikes - 1)
+    const calcLikes = Math.max(
+      0,
+      nextLoved ? currentLikes + 1 : currentLikes - 1
+    )
     local[idx].likes = calcLikes
     saveLocalPosts(local)
     newLikesCount = calcLikes
@@ -321,22 +337,33 @@ export async function togglePostLove(postId: string): Promise<{ success: boolean
   return { success: true, newLikes: newLikesCount, isLoved: nextLoved }
 }
 
-export async function savePost(post: Partial<BlogPost>): Promise<{ success: boolean; data?: BlogPost; error?: string }> {
+export async function savePost(
+  post: Partial<BlogPost>
+): Promise<{ success: boolean; data?: BlogPost; error?: string }> {
   const isNew = !post.id
   const now = new Date().toISOString()
 
   const payload: Partial<BlogPost> = {
     ...post,
     title: post.title?.trim() || 'Untitled Post',
-    slug: post.slug?.trim() || (post.title ? post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : `post-${Date.now()}`),
+    slug:
+      post.slug?.trim() ||
+      (post.title
+        ? post.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '')
+        : `post-${Date.now()}`),
     excerpt: post.excerpt?.trim() || '',
     content: post.content || '',
     category: post.category || 'GENERAL',
     tags: post.tags && post.tags.length > 0 ? post.tags : ['GENERAL'],
-    read_time: post.read_time || `${Math.max(1, Math.ceil((post.content || '').split(' ').length / 200))} min read`,
+    read_time:
+      post.read_time ||
+      `${Math.max(1, Math.ceil((post.content || '').split(' ').length / 200))} min read`,
     likes: post.likes ?? 0,
     published: post.published ?? false,
-    updated_at: now,
+    updated_at: now
   }
 
   if (isSupabaseConfigured() && supabase) {
@@ -354,7 +381,7 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
             cover_image: payload.cover_image,
             read_time: payload.read_time,
             likes: payload.likes,
-            published: payload.published,
+            published: payload.published
           })
           .select()
           .single()
@@ -375,7 +402,7 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
             read_time: payload.read_time,
             likes: payload.likes,
             published: payload.published,
-            updated_at: now,
+            updated_at: now
           })
           .eq('id', post.id)
           .select()
@@ -385,7 +412,10 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
         return { success: true, data: data as BlogPost }
       }
     } catch (err: any) {
-      console.warn('Supabase save error, writing to local storage fallback:', err)
+      console.warn(
+        'Supabase save error, writing to local storage fallback:',
+        err
+      )
     }
   }
 
@@ -397,7 +427,7 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
     resultPost = {
       ...payload,
       id: `local-post-${Date.now()}`,
-      created_at: now,
+      created_at: now
     } as BlogPost
     local.unshift(resultPost)
   } else {
@@ -405,14 +435,14 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
     if (idx !== -1) {
       resultPost = {
         ...local[idx],
-        ...payload,
+        ...payload
       } as BlogPost
       local[idx] = resultPost
     } else {
       resultPost = {
         ...payload,
         id: post.id || `local-post-${Date.now()}`,
-        created_at: now,
+        created_at: now
       } as BlogPost
       local.unshift(resultPost)
     }
@@ -422,13 +452,18 @@ export async function savePost(post: Partial<BlogPost>): Promise<{ success: bool
   return { success: true, data: resultPost }
 }
 
-export async function deletePost(id: string): Promise<{ success: boolean; error?: string }> {
+export async function deletePost(
+  id: string
+): Promise<{ success: boolean; error?: string }> {
   if (isSupabaseConfigured() && supabase) {
     try {
       const { error } = await supabase.from('posts').delete().eq('id', id)
       if (error) throw error
     } catch (err: any) {
-      console.warn('Supabase delete post error, removing from local storage:', err)
+      console.warn(
+        'Supabase delete post error, removing from local storage:',
+        err
+      )
     }
   }
 

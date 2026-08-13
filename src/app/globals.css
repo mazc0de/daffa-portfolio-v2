@@ -173,15 +173,33 @@
   }
 
   /* Stagger Delays */
-  .puzzle-delay-0 { animation-delay: 0s; }
-  .puzzle-delay-1 { animation-delay: 0.1s; }
-  .puzzle-delay-2 { animation-delay: 0.2s; }
-  .puzzle-delay-3 { animation-delay: 0.3s; }
-  .puzzle-delay-4 { animation-delay: 0.4s; }
-  .puzzle-delay-5 { animation-delay: 0.5s; }
-  .puzzle-delay-6 { animation-delay: 0.6s; }
-  .puzzle-delay-7 { animation-delay: 0.7s; }
-  .puzzle-delay-8 { animation-delay: 0.8s; }
+  .puzzle-delay-0 {
+    animation-delay: 0s;
+  }
+  .puzzle-delay-1 {
+    animation-delay: 0.1s;
+  }
+  .puzzle-delay-2 {
+    animation-delay: 0.2s;
+  }
+  .puzzle-delay-3 {
+    animation-delay: 0.3s;
+  }
+  .puzzle-delay-4 {
+    animation-delay: 0.4s;
+  }
+  .puzzle-delay-5 {
+    animation-delay: 0.5s;
+  }
+  .puzzle-delay-6 {
+    animation-delay: 0.6s;
+  }
+  .puzzle-delay-7 {
+    animation-delay: 0.7s;
+  }
+  .puzzle-delay-8 {
+    animation-delay: 0.8s;
+  }
 
   @keyframes textPuzzleDrop {
     0% {
