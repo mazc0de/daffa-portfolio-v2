@@ -308,19 +308,21 @@ export default function Home() {
 
             {/* Composition Box */}
             <div className='border-ink relative grid min-h-[380px] grid-cols-12 grid-rows-12 overflow-hidden border-t-4 md:min-h-[480px] md:border-t-0 md:border-l-4'>
-              <div className='comp-red bg-red z-10 animate-puzzle-left puzzle-delay-1'></div>
-              <div className='comp-yellow bg-yellow z-10 animate-puzzle-right puzzle-delay-5'></div>
-              <div className='comp-oval-wrapper z-20 flex items-center justify-center animate-puzzle puzzle-delay-3'>
-                <div className='bg-blue border-ink flex aspect-[3/4] w-[200px] items-center justify-center overflow-hidden rounded-full border-4 md:w-[280px]'>
+              <div className='comp-red bg-red animate-puzzle-left puzzle-delay-1 z-10'></div>
+              <div className='comp-yellow bg-yellow animate-puzzle-right puzzle-delay-5 z-10'></div>
+              <div className='comp-oval-wrapper animate-puzzle puzzle-delay-3 z-20 flex items-center justify-center'>
+                {/* Photos */}
+                <div className='flex aspect-[3/4] w-[200px] items-center justify-center overflow-hidden rounded-full border-4 md:w-[280px]'>
                   <Image
-                    src='/headshot.webp'
-                    alt='Portrait'
+                    src='/blue-headshot.webp'
+                    alt='Daffa Hanifisyafiq'
                     width={280}
                     height={373}
-                    className='h-full w-full object-cover mix-blend-multiply brightness-[1.05] contrast-[1.1]'
+                    className='h-full w-full object-cover'
                     priority
                   />
                 </div>
+                {/* END Photos */}
               </div>
               {/* Grid lines */}
               <div
@@ -489,8 +491,8 @@ export default function Home() {
                         className={`shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-all duration-200 group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
                       >
                         <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
-                          <div className='flex items-center gap-2.5 min-w-0 pr-2'>
-                            <h3 className='text-[18px] font-bold tracking-[0.02em] uppercase truncate'>
+                          <div className='flex min-w-0 items-center gap-2.5 pr-2'>
+                            <h3 className='truncate text-[18px] font-bold tracking-[0.02em] uppercase'>
                               {proj.title}
                             </h3>
                             {proj.link && proj.link !== '#' && (
@@ -499,7 +501,7 @@ export default function Home() {
                                 target='_blank'
                                 rel='noopener noreferrer'
                                 onClick={e => e.stopPropagation()}
-                                className='border-ink bg-bg hover:bg-yellow hover:text-ink text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] font-black leading-none transition-transform duration-150 hover:-translate-y-0.5'
+                                className='border-ink bg-bg hover:bg-yellow hover:text-ink text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] leading-none font-black transition-transform duration-150 hover:-translate-y-0.5'
                                 title={`Visit ${proj.title}`}
                                 aria-label={`Visit ${proj.title}`}
                               >
@@ -549,14 +551,15 @@ export default function Home() {
           <div className='bg-ink h-1 w-full shrink-0'></div>
 
           {/* =============== BLOG / JOURNAL =============== */}
-          <section className='p-6 md:p-10 lg:p-14 bg-[#FFFDF7]' id='blog'>
+          <section className='bg-[#FFFDF7] p-6 md:p-10 lg:p-14' id='blog'>
             <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
               <div className='flex items-start gap-4'>
                 <div className='bg-red border-ink h-12 w-12 shrink-0 border-4'></div>
                 <div>
                   <h2>Blog & Journal</h2>
                   <p className='text-ink/50 mt-2 text-[14px] leading-none font-bold tracking-[0.08em] uppercase'>
-                    Technical Writing, Engineering Articles, Tips & Tricks, Journey & Personal Journal
+                    Technical Writing, Engineering Articles, Tips & Tricks,
+                    Journey & Personal Journal
                   </p>
                 </div>
               </div>
@@ -564,45 +567,61 @@ export default function Home() {
               <div className='flex items-center gap-3'>
                 <a
                   href='/blog'
-                  className='border-ink shadow-base bg-yellow text-ink hover:bg-blue hover:text-white inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  className='border-ink shadow-base bg-yellow text-ink hover:bg-blue inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   View All Articles ↗
                 </a>
               </div>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
               {isHomeLoading ? (
-                <div className='border-ink shadow-base bg-white border-4 p-8 text-center col-span-full'>
-                  <div className='inline-block w-6 h-6 border-4 border-ink border-t-red animate-spin mb-2' />
-                  <p className='font-black uppercase text-xs'>LOADING ARTICLES...</p>
+                <div className='border-ink shadow-base col-span-full border-4 bg-white p-8 text-center'>
+                  <div className='border-ink border-t-red mb-2 inline-block h-6 w-6 animate-spin border-4' />
+                  <p className='text-xs font-black uppercase'>
+                    LOADING ARTICLES...
+                  </p>
                 </div>
               ) : homePosts.length === 0 ? (
-                <div className='border-ink shadow-base bg-white border-4 p-8 flex flex-col items-center justify-center text-center space-y-3 col-span-full min-h-[200px]'>
-                  <h3 className='text-xl font-black uppercase text-center'>NO ARTICLES PUBLISHED YET</h3>
-                  <p className='text-ink/70 text-sm font-medium text-center max-w-md'>
-                    Check back soon for technical writing, engineering articles, tips & tricks, and personal journey posts.
+                <div className='border-ink shadow-base col-span-full flex min-h-[200px] flex-col items-center justify-center space-y-3 border-4 bg-white p-8 text-center'>
+                  <h3 className='text-center text-xl font-black uppercase'>
+                    NO ARTICLES PUBLISHED YET
+                  </h3>
+                  <p className='text-ink/70 max-w-md text-center text-sm font-medium'>
+                    Check back soon for technical writing, engineering articles,
+                    tips & tricks, and personal journey posts.
                   </p>
                 </div>
               ) : (
                 homePosts.slice(0, 2).map((post, idx) => (
-                  <div key={post.id} className='border-ink shadow-base bg-white border-4 p-6 flex flex-col justify-between space-y-4'>
+                  <div
+                    key={post.id}
+                    className='border-ink shadow-base flex flex-col justify-between space-y-4 border-4 bg-white p-6'
+                  >
                     <div className='space-y-2'>
-                      <span className={`text-white px-2 py-0.5 border-2 border-ink text-xs font-black uppercase inline-block ${idx % 2 === 0 ? 'bg-blue' : 'bg-red'}`}>
+                      <span
+                        className={`border-ink inline-block border-2 px-2 py-0.5 text-xs font-black text-white uppercase ${idx % 2 === 0 ? 'bg-blue' : 'bg-red'}`}
+                      >
                         {post.category}
                       </span>
-                      <h3 className='text-xl font-black uppercase tracking-tight text-ink'>
-                        <a href={`/blog/${post.slug}`} className='hover:text-blue'>
+                      <h3 className='text-ink text-xl font-black tracking-tight uppercase'>
+                        <a
+                          href={`/blog/${post.slug}`}
+                          className='hover:text-blue'
+                        >
                           {post.title}
                         </a>
                       </h3>
-                      <p className='text-ink text-sm font-medium leading-relaxed line-clamp-3'>
+                      <p className='text-ink line-clamp-3 text-sm leading-relaxed font-medium'>
                         {post.excerpt}
                       </p>
                     </div>
-                    <div className='pt-2 border-t-2 border-ink flex items-center justify-between text-xs font-bold'>
+                    <div className='border-ink flex items-center justify-between border-t-2 pt-2 text-xs font-bold'>
                       <span>{post.read_time}</span>
-                      <a href={`/blog/${post.slug}`} className='font-black uppercase text-red hover:underline'>
+                      <a
+                        href={`/blog/${post.slug}`}
+                        className='text-red font-black uppercase hover:underline'
+                      >
                         READ POST →
                       </a>
                     </div>
@@ -714,24 +733,24 @@ export default function Home() {
       {/* =============== MODAL =============== */}
       {selectedProject && (
         <div
-          className='bg-ink/90 fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-10 modal-3d-stage overflow-hidden touch-none overscroll-none'
+          className='bg-ink/90 modal-3d-stage fixed inset-0 z-50 flex touch-none items-center justify-center overflow-hidden overscroll-none p-4 sm:p-6 md:p-10'
           onClick={() => setSelectedProject(null)}
         >
           <div
-            className={`border-ink shadow-large flex flex-col relative w-full max-w-[800px] max-h-[85vh] md:max-h-[90vh] border-4 bg-white ${selectedProject.borderColor} animate-entrance is-visible transition-transform duration-300 modal-3d-card`}
+            className={`border-ink shadow-large relative flex max-h-[85vh] w-full max-w-[800px] flex-col border-4 bg-white md:max-h-[90vh] ${selectedProject.borderColor} animate-entrance is-visible modal-3d-card transition-transform duration-300`}
             onClick={e => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedProject(null)}
-              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 md:-top-6 md:-right-6 z-50 flex h-9 w-9 md:h-12 md:w-12 items-center justify-center border-2 md:border-4 text-lg md:text-2xl font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 z-50 flex h-9 w-9 items-center justify-center border-2 text-lg font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] md:-top-6 md:-right-6 md:h-12 md:w-12 md:border-4 md:text-2xl'
               aria-label='Close modal'
             >
               ✕
             </button>
 
             {/* Content: non-scrollable on mobile (overflow-hidden), scrollable on desktop */}
-            <div className='flex-1 max-md:overflow-hidden md:overflow-y-auto p-4 sm:p-5 md:p-10'>
-              <div className='border-ink relative mb-3 md:mb-6 flex aspect-video w-full items-center justify-center overflow-hidden border-2 md:border-4 bg-white'>
+            <div className='flex-1 p-4 max-md:overflow-hidden sm:p-5 md:overflow-y-auto md:p-10'>
+              <div className='border-ink relative mb-3 flex aspect-video w-full items-center justify-center overflow-hidden border-2 bg-white md:mb-6 md:border-4'>
                 <Image
                   src={selectedProject.image || '/headshot.webp'}
                   alt={selectedProject.title}
@@ -742,8 +761,8 @@ export default function Home() {
                 />
               </div>
 
-              <div className='mb-2 md:mb-4 flex flex-wrap items-center gap-3 md:gap-4'>
-                <h3 className='text-[18px] sm:text-[24px] md:text-[32px] font-black tracking-[0.02em] uppercase'>
+              <div className='mb-2 flex flex-wrap items-center gap-3 md:mb-4 md:gap-4'>
+                <h3 className='text-[18px] font-black tracking-[0.02em] uppercase sm:text-[24px] md:text-[32px]'>
                   {selectedProject.title}
                 </h3>
                 {selectedProject.link && selectedProject.link !== '#' && (
@@ -751,19 +770,20 @@ export default function Home() {
                     href={selectedProject.link}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='border-ink bg-yellow hover:bg-red text-ink hover:text-white shadow-base inline-flex items-center gap-1.5 border-2 md:border-4 px-3 py-1 text-[12px] md:text-[14px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px]'
+                    className='border-ink bg-yellow hover:bg-red text-ink shadow-base inline-flex items-center gap-1.5 border-2 px-3 py-1 text-[12px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white md:border-4 md:text-[14px]'
                     title={`Visit ${selectedProject.title}`}
                   >
-                    Visit Site <span className='text-sm md:text-base leading-none'>↗</span>
+                    Visit Site{' '}
+                    <span className='text-sm leading-none md:text-base'>↗</span>
                   </a>
                 )}
                 <div
-                  className={`border-ink h-3.5 w-3.5 md:h-4 md:w-4 shrink-0 rounded-full border-2 md:border-[3px] ${selectedProject.statusColor}`}
+                  className={`border-ink h-3.5 w-3.5 shrink-0 rounded-full border-2 md:h-4 md:w-4 md:border-[3px] ${selectedProject.statusColor}`}
                   title={selectedProject.status}
                 ></div>
               </div>
 
-              <p className='mb-4 md:mb-8 text-[13px] sm:text-[16px] md:text-[18px] leading-[1.5] md:leading-[1.6] font-medium'>
+              <p className='mb-4 text-[13px] leading-[1.5] font-medium sm:text-[16px] md:mb-8 md:text-[18px] md:leading-[1.6]'>
                 {selectedProject.desc}
               </p>
 
@@ -771,7 +791,7 @@ export default function Home() {
                 {selectedProject.tags.map((tag: string, i: number) => (
                   <span
                     key={i}
-                    className='border-ink bg-bg border-1.5 md:border-2 px-2 py-1 md:px-3 md:py-1.5 text-[10px] md:text-[12px] font-bold tracking-[0.08em] uppercase'
+                    className='border-ink bg-bg border-1.5 px-2 py-1 text-[10px] font-bold tracking-[0.08em] uppercase md:border-2 md:px-3 md:py-1.5 md:text-[12px]'
                   >
                     {tag}
                   </span>
