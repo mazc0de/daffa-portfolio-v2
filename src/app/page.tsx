@@ -467,31 +467,23 @@ export default function Home() {
               </div>
             </div>
 
-            <div
-              className='relative z-50 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'
-              style={{ transformStyle: 'preserve-3d' }}
-            >
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {(showAllProjects ? projectsData : projectsData.slice(0, 6)).map(
                 proj => (
-                  <div
-                    key={proj.title}
-                    className='animate-entrance h-full w-full'
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
-                    {/* Container DIV pengganti button agar HTML valid, ditambah translateZ agar area klik menonjol ke depan */}
+                  <div key={proj.title} className='animate-entrance h-full w-full'>
                     <div
                       role='button'
                       tabIndex={0}
                       onClick={() => setSelectedProject(proj)}
                       onKeyDown={e => {
-                        if (e.key === 'Enter') setSelectedProject(proj)
+                        if (e.key === 'Enter' || e.key === ' ')
+                          setSelectedProject(proj)
                       }}
                       className='group relative block h-full w-full cursor-pointer text-left focus:outline-none'
-                      style={{ transform: 'translateZ(30px)' }}
                       aria-label={`View project: ${proj.title}`}
                     >
                       <article
-                        className={`shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-all duration-200 group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
+                        className={`border-ink shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-shadow duration-150 ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
                       >
                         <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
                           <div className='flex min-w-0 items-center gap-2.5 pr-2'>
@@ -499,17 +491,12 @@ export default function Home() {
                               {proj.title}
                             </h3>
                             {proj.link && proj.link !== '#' && (
-                              <a
-                                href={proj.link}
-                                target='_blank'
-                                rel='noopener noreferrer'
-                                onClick={e => e.stopPropagation()}
-                                className='border-ink bg-bg hover:bg-yellow hover:text-ink text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] leading-none font-black transition-transform duration-150 hover:-translate-y-0.5'
-                                title={`Visit ${proj.title}`}
-                                aria-label={`Visit ${proj.title}`}
+                              <span
+                                className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] leading-none font-black transition-colors duration-150'
+                                title='Live Project'
                               >
                                 ↗
-                              </a>
+                              </span>
                             )}
                           </div>
                           <div
