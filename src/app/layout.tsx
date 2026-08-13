@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: 'Daffa Hanifisyafiq Portfolio',
     images: [
       {
-        url: '/headshot.webp',
+        url: '/images/daffa.webp',
         width: 1200,
         height: 630,
         alt: 'Daffa Hanifisyafiq - Frontend Web Developer'
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: 'Daffa Hanifisyafiq | Frontend Web Developer',
     description:
       'Daffa Hanifisyafiq — Frontend Developer specializing in React, Next.js, TypeScript, and Tailwind CSS. Building fast, clean, and responsive web apps.',
-    images: ['/headshot.webp']
+    images: ['/images/daffa.webp']
   },
   robots: {
     index: true,

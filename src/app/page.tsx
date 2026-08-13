@@ -755,7 +755,7 @@ export default function Home() {
             <div className='flex-1 p-4 max-md:overflow-hidden sm:p-5 md:overflow-y-auto md:p-10'>
               <div className='border-ink relative mb-3 flex aspect-video w-full items-center justify-center overflow-hidden border-2 bg-white md:mb-6 md:border-4'>
                 <Image
-                  src={selectedProject.image || '/headshot.webp'}
+                  src={selectedProject.image || '/blue-headshot.webp'}
                   alt={selectedProject.title}
                   fill
                   sizes='(max-width: 768px) 100vw, 800px'
