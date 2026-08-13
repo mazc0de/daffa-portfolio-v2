@@ -183,7 +183,10 @@ export default function Home() {
 
   return (
     <>
-      <main className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'>
+      <main
+        className='perspective-stage flex min-h-screen items-start justify-center px-5 pt-10 pb-20'
+        suppressHydrationWarning
+      >
         <div
           ref={planeRef}
           className='tilted-plane border-ink shadow-large relative w-full max-w-[1200px] border-4 bg-white'
