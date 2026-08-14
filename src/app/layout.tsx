@@ -1,4 +1,6 @@
 import { Outfit } from 'next/font/google'
+import type { Metadata } from 'next'
+import { BauhausCursor } from '@/components/BauhausCursor'
 import './globals.css'
 
 const outfit = Outfit({
@@ -6,8 +8,6 @@ const outfit = Outfit({
   variable: '--font-sans',
   display: 'swap'
 })
-
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://daffah.my.id'),
@@ -91,8 +91,10 @@ export default function RootLayout({
         className={`${outfit.variable} grain-overlay`}
         suppressHydrationWarning
       >
+        <BauhausCursor />
         {children}
       </body>
     </html>
   )
 }
+
