@@ -243,10 +243,10 @@ export default function Home() {
                   </div>
                   <div className='flex flex-wrap gap-2.5'>
                     <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
-                      Next
+                      Next JS
                     </span>
                     <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
-                      React
+                      React JS
                     </span>
                     <span className='border-ink border-[3px] bg-white px-2 py-0.5 text-[11px] font-bold uppercase'>
                       Typescript
@@ -267,14 +267,20 @@ export default function Home() {
                   className='group/btn animate-puzzle puzzle-delay-3 border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   <span>View Work</span>
-                  <ArrowRight className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1' strokeWidth={2.5} />
+                  <ArrowRight
+                    className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1'
+                    strokeWidth={2.5}
+                  />
                 </a>
                 <a
                   href='#connect'
                   className='group/btn animate-puzzle puzzle-delay-4 border-ink shadow-base hover:shadow-hover active:shadow-press text-ink inline-flex cursor-pointer items-center gap-2 border-4 bg-white px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   <span>Contact</span>
-                  <ArrowUpRight className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5' strokeWidth={2.5} />
+                  <ArrowUpRight
+                    className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5'
+                    strokeWidth={2.5}
+                  />
                 </a>
               </div>
 
@@ -465,7 +471,10 @@ export default function Home() {
             <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {(showAllProjects ? projectsData : projectsData.slice(0, 6)).map(
                 proj => (
-                  <div key={proj.title} className='animate-entrance h-full w-full'>
+                  <div
+                    key={proj.title}
+                    className='animate-entrance h-full w-full'
+                  >
                     <div
                       role='button'
                       tabIndex={0}
