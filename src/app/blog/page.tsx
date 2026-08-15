@@ -66,9 +66,9 @@ export default function BlogIndexPage() {
         <div className='mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6'>
           <Link
             href='/'
-            className='flex items-center gap-2 border-4 border-[#121212] bg-white px-4 py-2 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#F0C020] active:translate-x-0.5 active:translate-y-0.5'
+            className='group/back flex items-center gap-2 border-4 border-[#121212] bg-white px-4 py-2 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#F0C020] active:translate-x-0.5 active:translate-y-0.5'
           >
-            <ArrowLeft className='h-4 w-4' />
+            <ArrowLeft className='h-4 w-4 transition-transform duration-200 group-hover/back:-translate-x-1' />
             <span>PORTFOLIO</span>
           </Link>
         </div>

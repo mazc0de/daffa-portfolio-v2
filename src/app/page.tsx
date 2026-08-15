@@ -5,6 +5,17 @@ import Image from 'next/image'
 import projectsData from '../data/projects.json'
 import { BlogPost } from '@/types/blog'
 import { fetchPosts } from '@/lib/blog-service'
+import {
+  Sparkles,
+  Layers,
+  ArrowRight,
+  ArrowUpRight,
+  Mail,
+  GitBranch,
+  Briefcase,
+  FileText,
+  X
+} from 'lucide-react'
 
 interface Project {
   title: string
@@ -213,15 +224,7 @@ export default function Home() {
               <div className='grid grid-cols-2 gap-5'>
                 <div className='animate-puzzle-left puzzle-delay-1 border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
                   <div className='flex items-center gap-2'>
-                    <svg
-                      className='text-red h-4 w-4'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='2.5'
-                    >
-                      <path d='M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z' />
-                    </svg>
+                    <Sparkles className='text-red h-4 w-4' strokeWidth={2.5} />
                     <span className='text-[12px] font-bold tracking-[0.1em] uppercase'>
                       Focus
                     </span>
@@ -233,17 +236,7 @@ export default function Home() {
                 </div>
                 <div className='animate-puzzle-right puzzle-delay-2 border-ink shadow-base flex flex-col gap-3 border-4 bg-white p-5'>
                   <div className='flex items-center gap-2'>
-                    <svg
-                      className='text-blue h-4 w-4'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='2.5'
-                    >
-                      <polygon points='12 2 2 7 12 12 22 7 12 2' />
-                      <polyline points='2 12 12 17 22 12' />
-                      <polyline points='2 17 12 22 22 17' />
-                    </svg>
+                    <Layers className='text-blue h-4 w-4' strokeWidth={2.5} />
                     <span className='text-[12px] font-bold tracking-[0.1em] uppercase'>
                       Stack
                     </span>
@@ -271,15 +264,17 @@ export default function Home() {
               <div className='mt-2 flex flex-wrap gap-5'>
                 <a
                   href='#projects'
-                  className='animate-puzzle puzzle-delay-3 border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  className='group/btn animate-puzzle puzzle-delay-3 border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow text-ink inline-flex cursor-pointer items-center gap-2 border-4 px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
-                  View Work <span className='text-lg leading-none'>→</span>
+                  <span>View Work</span>
+                  <ArrowRight className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-1' strokeWidth={2.5} />
                 </a>
                 <a
                   href='#connect'
-                  className='animate-puzzle puzzle-delay-4 border-ink shadow-base hover:shadow-hover active:shadow-press text-ink inline-flex cursor-pointer items-center gap-2 border-4 bg-white px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  className='group/btn animate-puzzle puzzle-delay-4 border-ink shadow-base hover:shadow-hover active:shadow-press text-ink inline-flex cursor-pointer items-center gap-2 border-4 bg-white px-5 py-3 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
-                  Contact <span className='text-lg leading-none'>↗</span>
+                  <span>Contact</span>
+                  <ArrowUpRight className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5' strokeWidth={2.5} />
                 </a>
               </div>
 
@@ -492,10 +487,10 @@ export default function Home() {
                             </h3>
                             {proj.link && proj.link !== '#' && (
                               <span
-                                className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 text-[13px] leading-none font-black transition-colors duration-150'
+                                className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors duration-150'
                                 title='Live Project'
                               >
-                                ↗
+                                <ArrowUpRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
                               </span>
                             )}
                           </div>
@@ -557,9 +552,10 @@ export default function Home() {
               <div className='flex items-center gap-3'>
                 <a
                   href='/blog'
-                  className='border-ink shadow-base bg-yellow text-ink hover:bg-blue inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white active:translate-x-[2px] active:translate-y-[2px]'
+                  className='group/allposts border-ink shadow-base bg-yellow text-ink hover:bg-blue inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white active:translate-x-[2px] active:translate-y-[2px]'
                 >
-                  View All Articles ↗
+                  <span>View All Articles</span>
+                  <ArrowUpRight className='h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover/allposts:translate-x-0.5 group-hover/allposts:-translate-y-0.5' />
                 </a>
               </div>
             </div>
@@ -610,9 +606,10 @@ export default function Home() {
                       <span>{post.read_time}</span>
                       <a
                         href={`/blog/${post.slug}`}
-                        className='text-red font-black uppercase hover:underline'
+                        className='group/readpost text-red inline-flex items-center gap-1 font-black uppercase hover:underline'
                       >
-                        READ POST →
+                        <span>READ POST</span>
+                        <ArrowRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover/readpost:translate-x-1' />
                       </a>
                     </div>
                   </div>
@@ -638,7 +635,7 @@ export default function Home() {
             <div className='mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2'>
               {[
                 {
-                  icon: '@',
+                  icon: Mail,
                   label: 'Email',
                   sub: 'daffahan29@gmail.com',
                   link: 'mailto:daffahan29@gmail.com',
@@ -646,7 +643,7 @@ export default function Home() {
                   iconColor: 'text-white'
                 },
                 {
-                  icon: 'GH',
+                  icon: GitBranch,
                   label: 'GitHub',
                   sub: 'github.com/mazc0de',
                   link: 'https://github.com/mazc0de',
@@ -654,7 +651,7 @@ export default function Home() {
                   iconColor: 'text-white'
                 },
                 {
-                  icon: 'in',
+                  icon: Briefcase,
                   label: 'LinkedIn',
                   sub: 'Daffa Hanifisyafiq',
                   link: 'https://www.linkedin.com/in/daffahan/',
@@ -662,12 +659,12 @@ export default function Home() {
                   iconColor: 'text-white'
                 },
                 {
-                  icon: 'CV',
+                  icon: FileText,
                   label: 'Read.cv',
                   sub: 'daffa',
                   link: '#',
                   iconBg: 'bg-yellow',
-                  iconColor: 'text-white'
+                  iconColor: 'text-ink'
                 }
               ].map((conn, i) => (
                 <a
@@ -676,9 +673,9 @@ export default function Home() {
                   className='animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex cursor-pointer items-center gap-4 border-4 bg-white p-6 no-underline transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   <div
-                    className={`border-ink flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 text-xl font-black ${conn.iconBg} ${conn.iconColor}`}
+                    className={`border-ink flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 ${conn.iconBg} ${conn.iconColor}`}
                   >
-                    {conn.icon}
+                    <conn.icon className='h-5 w-5 stroke-[2.5]' />
                   </div>
                   <div>
                     <div className='text-[16px] font-bold tracking-[0.05em] uppercase'>
@@ -732,10 +729,10 @@ export default function Home() {
           >
             <button
               onClick={() => setSelectedProject(null)}
-              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 z-50 flex h-9 w-9 items-center justify-center border-2 text-lg font-black transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] md:-top-6 md:-right-6 md:h-12 md:w-12 md:border-4 md:text-2xl'
+              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 z-50 flex h-9 w-9 items-center justify-center border-2 transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] md:-top-6 md:-right-6 md:h-12 md:w-12 md:border-4'
               aria-label='Close modal'
             >
-              ✕
+              <X className='h-5 w-5 stroke-[3] md:h-7 md:w-7' />
             </button>
 
             {/* Content: non-scrollable on mobile (overflow-hidden), scrollable on desktop */}
@@ -760,11 +757,11 @@ export default function Home() {
                     href={selectedProject.link}
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='border-ink bg-yellow hover:bg-red text-ink shadow-base inline-flex items-center gap-1.5 border-2 px-3 py-1 text-[12px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white md:border-4 md:text-[14px]'
+                    className='group/modalbtn border-ink bg-yellow hover:bg-red text-ink shadow-base inline-flex items-center gap-1.5 border-2 px-3 py-1 text-[12px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white md:border-4 md:text-[14px]'
                     title={`Visit ${selectedProject.title}`}
                   >
-                    Visit Site{' '}
-                    <span className='text-sm leading-none md:text-base'>↗</span>
+                    <span>Visit Site</span>
+                    <ArrowUpRight className='h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover/modalbtn:translate-x-0.5 group-hover/modalbtn:-translate-y-0.5 md:h-5 md:w-5' />
                   </a>
                 )}
                 <div

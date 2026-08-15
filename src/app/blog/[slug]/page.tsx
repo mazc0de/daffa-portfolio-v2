@@ -96,9 +96,9 @@ export default function BlogPostPage({
           </p>
           <Link
             href='/blog'
-            className='inline-flex items-center gap-2 border-4 border-[#121212] bg-[#F0C020] px-6 py-3 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-colors hover:bg-[#1040C0] hover:text-white'
+            className='group/back inline-flex items-center gap-2 border-4 border-[#121212] bg-[#F0C020] px-6 py-3 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-colors hover:bg-[#1040C0] hover:text-white'
           >
-            <ArrowLeft className='h-4 w-4' />
+            <ArrowLeft className='h-4 w-4 transition-transform duration-200 group-hover/back:-translate-x-1' />
             <span>BACK TO BLOG</span>
           </Link>
         </div>
@@ -113,9 +113,9 @@ export default function BlogPostPage({
         <div className='mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-4 sm:px-6'>
           <Link
             href='/blog'
-            className='flex items-center gap-2 border-4 border-[#121212] bg-white px-4 py-2 text-xs font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#F0C020] active:translate-x-0.5 active:translate-y-0.5 sm:text-sm'
+            className='group/back flex items-center gap-2 border-4 border-[#121212] bg-white px-4 py-2 text-xs font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#F0C020] active:translate-x-0.5 active:translate-y-0.5 sm:text-sm'
           >
-            <ArrowLeft className='h-4 w-4' />
+            <ArrowLeft className='h-4 w-4 transition-transform duration-200 group-hover/back:-translate-x-1' />
             <span>ALL ARTICLES</span>
           </Link>
 
@@ -273,9 +273,9 @@ export default function BlogPostPage({
         <div className='flex items-center justify-between pt-4'>
           <Link
             href='/blog'
-            className='flex items-center gap-2 border-4 border-[#121212] bg-[#F0C020] px-6 py-3 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#D02020] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
+            className='group/back flex items-center gap-2 border-4 border-[#121212] bg-[#F0C020] px-6 py-3 text-sm font-black text-[#121212] uppercase shadow-[4px_4px_0px_#121212] transition-all hover:bg-[#D02020] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
           >
-            <ArrowLeft className='h-4 w-4' />
+            <ArrowLeft className='h-4 w-4 transition-transform duration-200 group-hover/back:-translate-x-1' />
             <span>BACK TO ALL ARTICLES</span>
           </Link>
         </div>

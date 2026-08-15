@@ -454,9 +454,9 @@ function helloWorld(): string {
           <div className='flex items-center gap-3'>
             <Link
               href='/blog'
-              className='border-4 border-[#121212] bg-white p-2 shadow-[2px_2px_0px_#121212] transition-colors hover:bg-[#F0C020]'
+              className='group/back border-4 border-[#121212] bg-white p-2 shadow-[2px_2px_0px_#121212] transition-colors hover:bg-[#F0C020]'
             >
-              <ArrowLeft className='h-4 w-4' />
+              <ArrowLeft className='h-4 w-4 transition-transform duration-200 group-hover/back:-translate-x-1' />
             </Link>
             <div>
               <h1 className='flex items-center gap-2 text-xl font-black tracking-tight uppercase sm:text-2xl'>

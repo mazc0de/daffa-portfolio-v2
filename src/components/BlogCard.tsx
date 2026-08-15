@@ -143,10 +143,10 @@ export function BlogCard({ post, index = 0 }: BlogCardProps) {
 
             <Link
               href={`/blog/${post.slug}`}
-              className='flex items-center gap-1 border-2 border-[#121212] bg-[#F0C020] px-3 py-1.5 font-black text-[#121212] uppercase shadow-[2px_2px_0px_#121212] transition-colors hover:bg-[#D02020] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
+              className='group/btn flex items-center gap-1 border-2 border-[#121212] bg-[#F0C020] px-3 py-1.5 font-black text-[#121212] uppercase shadow-[2px_2px_0px_#121212] transition-colors hover:bg-[#D02020] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
             >
               <span>READ ARTICLE</span>
-              <ArrowUpRight className='h-4 w-4' />
+              <ArrowUpRight className='h-4 w-4 transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5' />
             </Link>
           </div>
         </div>
