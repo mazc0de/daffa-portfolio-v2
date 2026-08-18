@@ -35,22 +35,22 @@
   {
     "title": "Harbor Departure Board",
     "status": "live",
-    "statusColor": "bg-red",
+    "statusColor": "bg-blue",
     "desc": "A digital departure board commonly found at ports that displays essential ferry information, including vessel name, destination, schedule, gate, status, and remarks. It helps passengers stay updated and informed in real time.",
     "tags": ["React.js", "Tailwind CSS"],
-    "borderColor": "border-red",
-    "borderL": "border-l-red",
+    "borderColor": "border-blue",
+    "borderL": "border-l-blue",
     "image": "/images/monitoring.webp",
     "link": "#"
   },
   {
     "title": "Rodex",
     "status": "live",
-    "statusColor": "bg-blue",
+    "statusColor": "bg-red",
     "desc": "Rodex is a train ticket booking application available on the Lifestyle page of myBCA. It is seamlessly integrated with BCA payment services, making it easy and secure for users to search schedules and purchase tickets directly.",
     "tags": ["React.js", "Tailwind CSS"],
-    "borderColor": "border-blue",
-    "borderL": "border-l-blue",
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
     "image": "/images/rodex2.webp",
     "link": "#"
   },
@@ -68,22 +68,22 @@
   {
     "title": "Astra Visteon",
     "status": "live",
-    "statusColor": "bg-red",
+    "statusColor": "bg-blue",
     "desc": "This is a web-based application designed to streamline and manage continuous improvement initiatives using the PDCA (Plan-Do-Check-Action) methodology. It helps teams monitor every stage of the improvement cycle with clear visibility, structured workflows, and intuitive tracking tools, enabling more effective problem-solving and sustained operational excellence.",
     "tags": ["React.js", "Tailwind CSS"],
-    "borderColor": "border-red",
-    "borderL": "border-l-red",
+    "borderColor": "border-blue",
+    "borderL": "border-l-blue",
     "image": "/images/astra-visteon.webp",
     "link": "#"
   },
   {
     "title": "SPC Auto Detailing",
     "status": "live",
-    "statusColor": "bg-blue",
+    "statusColor": "bg-red",
     "desc": "A landing page designed to showcase a vehicle detailing and coating business. It highlights the services offered—such as premium detailing, paint protection, and high-quality ceramic coating—while presenting a clean, modern layout that builds trust and captures customer interest. The page focuses on visual appeal, clear service information, and strong calls-to-action to help convert visitors into clients.",
     "tags": ["React.js", "Tailwind CSS"],
-    "borderColor": "border-blue",
-    "borderL": "border-l-blue",
+    "borderColor": "border-red",
+    "borderL": "border-l-red",
     "image": "/images/spc-autodetailing.webp",
     "link": "#"
   }

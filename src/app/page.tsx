@@ -501,63 +501,78 @@ export default function Home() {
 
             <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
               {(showAllProjects ? projectsData : projectsData.slice(0, 6)).map(
-                proj => (
-                  <div
-                    key={proj.title}
-                    className='animate-entrance h-full w-full'
-                  >
+                (proj, idx) => {
+                  const columnColors = [
+                    { borderL: 'border-l-blue', borderColor: 'border-blue', statusColor: 'bg-blue' },
+                    { borderL: 'border-l-red', borderColor: 'border-red', statusColor: 'bg-red' },
+                    { borderL: 'border-l-yellow', borderColor: 'border-yellow', statusColor: 'bg-yellow' }
+                  ]
+                  const colColor = columnColors[idx % 3]
+                  const projectItem = {
+                    ...proj,
+                    borderColor: colColor.borderColor,
+                    borderL: colColor.borderL,
+                    statusColor: colColor.statusColor
+                  }
+
+                  return (
                     <div
-                      role='button'
-                      tabIndex={0}
-                      onClick={() => setSelectedProject(proj)}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter' || e.key === ' ')
-                          setSelectedProject(proj)
-                      }}
-                      className='group relative block h-full w-full cursor-pointer text-left focus:outline-none'
-                      aria-label={`View project: ${proj.title}`}
+                      key={proj.title}
+                      className='animate-entrance h-full w-full'
                     >
-                      <article
-                        className={`border-ink shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-shadow duration-150 ${proj.borderColor} border-l-[8px] ${proj.borderL}`}
+                      <div
+                        role='button'
+                        tabIndex={0}
+                        onClick={() => setSelectedProject(projectItem)}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' || e.key === ' ')
+                            setSelectedProject(projectItem)
+                        }}
+                        className='group relative block h-full w-full cursor-pointer text-left focus:outline-none'
+                        aria-label={`View project: ${proj.title}`}
                       >
-                        <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
-                          <div className='flex min-w-0 items-center gap-2.5 pr-2'>
-                            <h3 className='truncate text-[18px] font-bold tracking-[0.02em] uppercase'>
-                              {proj.title}
-                            </h3>
-                            {proj.link && proj.link !== '#' && (
-                              <span
-                                className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors duration-150'
-                                title='Live Project'
-                              >
-                                <ArrowUpRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
-                              </span>
-                            )}
+                        <article
+                          className={`border-ink shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-shadow duration-150 ${colColor.borderColor} border-l-[8px] ${colColor.borderL}`}
+                        >
+                          <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
+                            <div className='flex min-w-0 items-center gap-2.5 pr-2'>
+                              <h3 className='truncate text-[18px] font-bold tracking-[0.02em] uppercase'>
+                                {proj.title}
+                              </h3>
+                              {proj.link && proj.link !== '#' && (
+                                <span
+                                  className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors duration-150'
+                                  title='Live Project'
+                                >
+                                  <ArrowUpRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                                </span>
+                              )}
+                            </div>
+                            <div
+                              className={`border-ink h-3.5 w-3.5 shrink-0 rounded-full border-2 ${colColor.statusColor}`}
+                              title={proj.status}
+                            ></div>
                           </div>
-                          <div
-                            className={`border-ink h-3.5 w-3.5 shrink-0 rounded-full border-2 ${proj.statusColor}`}
-                            title={proj.status}
-                          ></div>
-                        </div>
-                        <div className='flex flex-1 flex-col gap-3.5 p-4 px-5 pb-5'>
-                          <p className='text-[14px] leading-[1.6] font-medium'>
-                            {proj.desc}
-                          </p>
-                          <div className='mt-auto flex flex-wrap gap-2'>
-                            {proj.tags.map((tag, j) => (
-                              <span
-                                key={j}
-                                className='border-ink bg-bg border-2 px-2.5 py-1 text-[10px] font-bold tracking-[0.08em] uppercase'
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                          <div className='flex flex-1 flex-col gap-3.5 p-4 px-5 pb-5'>
+                            <p className='text-[14px] leading-[1.6] font-medium'>
+                              {proj.desc}
+                            </p>
+                            <div className='mt-auto flex flex-wrap gap-2'>
+                              {proj.tags.map((tag, j) => (
+                                <span
+                                  key={j}
+                                  className='border-ink bg-bg border-2 px-2.5 py-1 text-[10px] font-bold tracking-[0.08em] uppercase'
+                                >
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      </article>
+                        </article>
+                      </div>
                     </div>
-                  </div>
-                )
+                  )
+                }
               )}
             </div>
 
