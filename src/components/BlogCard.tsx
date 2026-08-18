@@ -52,14 +52,16 @@ export function BlogCard({ post, index = 0 }: BlogCardProps) {
 
   return (
     <article className='group relative flex flex-col border-4 border-[#121212] bg-white shadow-[8px_8px_0px_#121212] transition-all duration-150 hover:-translate-y-1 hover:shadow-[12px_12px_0px_#121212]'>
-      {/* Top Banner Tag */}
+      {/* Top Banner */}
       <div className='flex items-center justify-between border-b-4 border-[#121212] bg-[#F0F0F0] px-4 py-2'>
         <div className='flex items-center gap-2'>
-          <span
-            className={`border-2 border-[#121212] px-2 py-0.5 text-xs font-black uppercase ${accent.bg} ${accent.text}`}
-          >
-            {post.category}
-          </span>
+          {post.tags && post.tags.length > 0 && (
+            <span
+              className={`border-2 border-[#121212] px-2 py-0.5 text-xs font-black uppercase ${accent.bg} ${accent.text}`}
+            >
+              {post.tags[0]}
+            </span>
+          )}
           {!post.published && (
             <span className='border-2 border-[#121212] bg-[#121212] px-2 py-0.5 text-xs font-black text-yellow-400 uppercase'>
               DRAFT

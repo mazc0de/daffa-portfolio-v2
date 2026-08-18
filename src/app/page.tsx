@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import projectsData from '../data/projects.json'
 import { BlogPost } from '@/types/blog'
 import { fetchPosts } from '@/lib/blog-service'
@@ -605,13 +606,13 @@ export default function Home() {
               </div>
 
               <div className='flex items-center gap-3'>
-                <a
+                <Link
                   href='/blog'
                   className='group/allposts border-ink shadow-base bg-yellow text-ink hover:bg-blue inline-flex items-center gap-2 border-4 px-6 py-2.5 text-[13px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] hover:text-white active:translate-x-[2px] active:translate-y-[2px]'
                 >
                   <span>View All Articles</span>
                   <ArrowUpRight className='h-4 w-4 stroke-[2.5] transition-transform duration-200 group-hover/allposts:translate-x-0.5 group-hover/allposts:-translate-y-0.5' />
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -640,18 +641,20 @@ export default function Home() {
                     className='border-ink shadow-base flex flex-col justify-between space-y-4 border-4 bg-white p-6'
                   >
                     <div className='space-y-2'>
-                      <span
-                        className={`border-ink inline-block border-2 px-2 py-0.5 text-xs font-black text-white uppercase ${idx % 2 === 0 ? 'bg-blue' : 'bg-red'}`}
-                      >
-                        {post.category}
-                      </span>
+                      {post.tags && post.tags.length > 0 && (
+                        <span
+                          className={`border-ink inline-block border-2 px-2 py-0.5 text-xs font-black text-white uppercase ${idx % 2 === 0 ? 'bg-blue' : 'bg-red'}`}
+                        >
+                          {post.tags[0]}
+                        </span>
+                      )}
                       <h3 className='text-ink text-xl font-black tracking-tight uppercase'>
-                        <a
+                        <Link
                           href={`/blog/${post.slug}`}
                           className='hover:text-blue'
                         >
                           {post.title}
-                        </a>
+                        </Link>
                       </h3>
                       <p className='text-ink line-clamp-3 text-sm leading-relaxed font-medium'>
                         {post.excerpt}
@@ -659,13 +662,13 @@ export default function Home() {
                     </div>
                     <div className='border-ink flex items-center justify-between border-t-2 pt-2 text-xs font-bold'>
                       <span>{post.read_time}</span>
-                      <a
+                      <Link
                         href={`/blog/${post.slug}`}
                         className='group/readpost text-red inline-flex items-center gap-1 font-black uppercase hover:underline'
                       >
                         <span>READ POST</span>
                         <ArrowRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover/readpost:translate-x-1' />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))

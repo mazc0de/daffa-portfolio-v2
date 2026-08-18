@@ -159,9 +159,11 @@ export default function BlogPostPage({
         <div className='space-y-6 border-4 border-[#121212] bg-white p-8 shadow-[10px_10px_0px_#121212] sm:p-12'>
           <div className='flex flex-wrap items-center justify-between gap-4'>
             <div className='flex flex-wrap items-center gap-3'>
-              <span className='border-2 border-[#121212] bg-[#1040C0] px-3 py-1 text-xs font-black text-white uppercase'>
-                {post.category}
-              </span>
+              {post.tags && post.tags.length > 0 && (
+                <span className='border-2 border-[#121212] bg-[#1040C0] px-3 py-1 text-xs font-black text-white uppercase'>
+                  {post.tags[0]}
+                </span>
+              )}
               <div className='flex items-center gap-1.5 text-xs font-bold text-[#121212]'>
                 <Clock className='h-3.5 w-3.5 text-[#D02020]' />
                 <span>{post.read_time}</span>

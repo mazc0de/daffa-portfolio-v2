@@ -1,63 +1,40 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
-import { BlogPost, BlogCategory } from '@/types/blog'
+import { BlogPost } from '@/types/blog'
 import { fetchPosts } from '@/lib/blog-service'
-import { fetchCategories } from '@/lib/category-service'
-import { isSupabaseConfigured } from '@/lib/supabase'
 import { BlogCard } from '@/components/BlogCard'
 import { Search, Sparkles, ArrowLeft } from 'lucide-react'
 
 export default function BlogIndexPage() {
   const [posts, setPosts] = useState<BlogPost[]>([])
-  const [categoriesList, setCategoriesList] = useState<string[]>(['ALL'])
-  const [filteredPosts, setFilteredPosts] = useState<BlogPost[]>([])
-  const [selectedCategory, setSelectedCategory] = useState<string>('ALL')
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  const [isSupabaseLive, setIsSupabaseLive] = useState<boolean>(false)
 
   useEffect(() => {
-    setIsSupabaseLive(isSupabaseConfigured())
-
     async function loadData() {
       setIsLoading(true)
-      const [fetchedPosts, fetchedCats] = await Promise.all([
-        fetchPosts(false),
-        fetchCategories()
-      ])
+      const fetchedPosts = await fetchPosts(false)
       setPosts(fetchedPosts)
-      setFilteredPosts(fetchedPosts)
-
-      const catNames = ['ALL', ...fetchedCats.map(c => c.name.toUpperCase())]
-      setCategoriesList(Array.from(new Set(catNames)))
-
       setIsLoading(false)
     }
 
     loadData()
   }, [])
 
-  useEffect(() => {
-    let result = posts
-
-    if (selectedCategory !== 'ALL') {
-      result = result.filter(p => p.category.toUpperCase() === selectedCategory)
+  const filteredPosts = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return posts
     }
-
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase()
-      result = result.filter(
-        p =>
-          p.title.toLowerCase().includes(q) ||
-          p.excerpt.toLowerCase().includes(q) ||
-          p.tags.some(t => t.toLowerCase().includes(q))
-      )
-    }
-
-    setFilteredPosts(result)
-  }, [selectedCategory, searchQuery, posts])
+    const q = searchQuery.toLowerCase()
+    return posts.filter(
+      p =>
+        p.title.toLowerCase().includes(q) ||
+        p.excerpt.toLowerCase().includes(q) ||
+        p.tags?.some(t => t.toLowerCase().includes(q))
+    )
+  }, [searchQuery, posts])
 
   return (
     <div className='grain-overlay min-h-screen bg-[#F0F0F0] pb-20 font-sans text-[#121212]'>
@@ -99,28 +76,15 @@ export default function BlogIndexPage() {
           </div>
         </div>
 
-        {/* Filter and Search Bar */}
-        <div className='space-y-6 border-4 border-[#121212] bg-white p-6 shadow-[8px_8px_0px_#121212]'>
+        {/* Search Bar */}
+        <div className='border-4 border-[#121212] bg-white p-6 shadow-[8px_8px_0px_#121212]'>
           <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
-            {/* Dynamic Categories */}
-            <div className='flex w-full flex-wrap gap-2 md:w-auto'>
-              {categoriesList.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`border-2 border-[#121212] px-4 py-2 text-xs font-black uppercase shadow-[3px_3px_0px_#121212] transition-all active:translate-x-0.5 active:translate-y-0.5 ${
-                    selectedCategory === cat
-                      ? 'bg-[#1040C0] text-white'
-                      : 'bg-[#F0F0F0] text-[#121212] hover:bg-[#F0C020]'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
+            <p className='text-xs font-black uppercase text-[#121212]'>
+              {filteredPosts.length} ARTICLE{filteredPosts.length === 1 ? '' : 'S'} FOUND
+            </p>
 
             {/* Search Input */}
-            <div className='relative w-full md:w-72'>
+            <div className='relative w-full md:w-80'>
               <input
                 type='text'
                 placeholder='SEARCH ARTICLES...'
@@ -142,20 +106,21 @@ export default function BlogIndexPage() {
         ) : filteredPosts.length === 0 ? (
           <div className='flex min-h-[320px] flex-col items-center justify-center space-y-4 border-4 border-[#121212] bg-white p-12 text-center shadow-[8px_8px_0px_#121212]'>
             <h3 className='text-center text-2xl font-black uppercase'>
-              NO POSTS MATCH YOUR CRITERIA
+              NO POSTS FOUND
             </h3>
             <p className='max-w-md text-center text-sm font-medium'>
-              Try searching for a different keyword or select another category.
+              {searchQuery
+                ? 'Try searching for a different keyword.'
+                : 'No articles have been published yet. Check back soon!'}
             </p>
-            <button
-              onClick={() => {
-                setSelectedCategory('ALL')
-                setSearchQuery('')
-              }}
-              className='border-2 border-[#121212] bg-[#F0C020] px-6 py-2.5 text-xs font-black text-[#121212] uppercase shadow-[3px_3px_0px_#121212] transition-colors hover:bg-[#1040C0] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
-            >
-              RESET FILTERS
-            </button>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className='border-2 border-[#121212] bg-[#F0C020] px-6 py-2.5 text-xs font-black text-[#121212] uppercase shadow-[3px_3px_0px_#121212] transition-colors hover:bg-[#1040C0] hover:text-white active:translate-x-0.5 active:translate-y-0.5'
+              >
+                RESET SEARCH
+              </button>
+            )}
           </div>
         ) : (
           <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3'>
@@ -168,3 +133,4 @@ export default function BlogIndexPage() {
     </div>
   )
 }
+
