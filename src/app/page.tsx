@@ -14,7 +14,9 @@ import {
   GitBranch,
   Briefcase,
   FileText,
-  X
+  X,
+  Copy,
+  Check
 } from 'lucide-react'
 
 interface Project {
@@ -36,6 +38,35 @@ export default function Home() {
 
   const [homePosts, setHomePosts] = useState<BlogPost[]>([])
   const [isHomeLoading, setIsHomeLoading] = useState<boolean>(true)
+  const [copiedEmail, setCopiedEmail] = useState<boolean>(false)
+  const [showCopyToast, setShowCopyToast] = useState<boolean>(false)
+  const [showCvModal, setShowCvModal] = useState<boolean>(false)
+  const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('daffahan29@gmail.com')
+    } catch {
+      const textArea = document.createElement('textarea')
+      textArea.value = 'daffahan29@gmail.com'
+      document.body.appendChild(textArea)
+      textArea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textArea)
+    }
+
+    setCopiedEmail(true)
+    setShowCopyToast(true)
+
+    if (toastTimeoutRef.current) {
+      clearTimeout(toastTimeoutRef.current)
+    }
+
+    toastTimeoutRef.current = setTimeout(() => {
+      setCopiedEmail(false)
+      setShowCopyToast(false)
+    }, 3000)
+  }
 
   useEffect(() => {
     async function loadHomePosts() {
@@ -161,7 +192,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (selectedProject) {
+    if (selectedProject || showCvModal) {
       document.body.style.overflow = 'hidden'
       document.documentElement.style.overflow = 'hidden'
     } else {
@@ -172,7 +203,7 @@ export default function Home() {
       document.body.style.overflow = ''
       document.documentElement.style.overflow = ''
     }
-  }, [selectedProject])
+  }, [selectedProject, showCvModal])
 
   useEffect(() => {
     if (showAllProjects) {
@@ -642,60 +673,126 @@ export default function Home() {
             </div>
 
             <div className='mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2'>
-              {[
-                {
-                  icon: Mail,
-                  label: 'Email',
-                  sub: 'daffahan29@gmail.com',
-                  link: 'mailto:daffahan29@gmail.com',
-                  iconBg: 'bg-red',
-                  iconColor: 'text-white'
-                },
-                {
-                  icon: GitBranch,
-                  label: 'GitHub',
-                  sub: 'github.com/mazc0de',
-                  link: 'https://github.com/mazc0de',
-                  iconBg: 'bg-ink',
-                  iconColor: 'text-white'
-                },
-                {
-                  icon: Briefcase,
-                  label: 'LinkedIn',
-                  sub: 'Daffa Hanifisyafiq',
-                  link: 'https://www.linkedin.com/in/daffahan/',
-                  iconBg: 'bg-blue',
-                  iconColor: 'text-white'
-                },
-                {
-                  icon: FileText,
-                  label: 'Read.cv',
-                  sub: 'daffa',
-                  link: '#',
-                  iconBg: 'bg-yellow',
-                  iconColor: 'text-ink'
-                }
-              ].map((conn, i) => (
+              {/* Card 1: Email */}
+              <div className='group/card animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex items-center justify-between gap-4 border-4 bg-white p-5 md:p-6 transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'>
                 <a
-                  key={i}
-                  href={conn.link}
-                  className='animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex cursor-pointer items-center gap-4 border-4 bg-white p-6 no-underline transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                  href='mailto:daffahan29@gmail.com'
+                  className='flex min-w-0 flex-1 items-center gap-4 no-underline text-ink'
                 >
-                  <div
-                    className={`border-ink flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4 ${conn.iconBg} ${conn.iconColor}`}
-                  >
-                    <conn.icon className='h-5 w-5 stroke-[2.5]' />
+                  <div className='border-ink bg-red text-white flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4'>
+                    <Mail className='h-5 w-5 stroke-[2.5]' />
                   </div>
-                  <div>
+                  <div className='min-w-0 flex-1'>
                     <div className='text-[16px] font-bold tracking-[0.05em] uppercase'>
-                      {conn.label}
+                      Email
                     </div>
-                    <div className='mt-0.5 text-[12px] font-medium opacity-60'>
-                      {conn.sub}
+                    <div className='mt-0.5 truncate text-[12px] font-medium opacity-60'>
+                      daffahan29@gmail.com
                     </div>
                   </div>
                 </a>
-              ))}
+                <button
+                  type='button'
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    handleCopyEmail()
+                  }}
+                  className='border-ink bg-bg group-hover/card:bg-yellow hover:!bg-yellow text-ink flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center border-2 md:border-[3px] transition-colors duration-150 cursor-pointer shadow-none active:translate-x-[1px] active:translate-y-[1px]'
+                  title={copiedEmail ? 'Email Copied!' : 'Copy email to clipboard'}
+                  aria-label='Copy email to clipboard'
+                >
+                  {copiedEmail ? (
+                    <Check className='h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5]' />
+                  ) : (
+                    <Copy className='h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5]' />
+                  )}
+                </button>
+              </div>
+
+              {/* Card 2: GitHub */}
+              <a
+                href='https://github.com/mazc0de'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='group/card animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex cursor-pointer items-center justify-between gap-4 border-4 bg-white p-5 md:p-6 no-underline transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+              >
+                <div className='flex min-w-0 flex-1 items-center gap-4'>
+                  <div className='border-ink bg-ink text-white flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4'>
+                    <GitBranch className='h-5 w-5 stroke-[2.5]' />
+                  </div>
+                  <div className='min-w-0 flex-1'>
+                    <div className='text-[16px] font-bold tracking-[0.05em] uppercase'>
+                      GitHub
+                    </div>
+                    <div className='mt-0.5 truncate text-[12px] font-medium opacity-60'>
+                      github.com/mazc0de
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className='border-ink bg-bg group-hover/card:bg-yellow text-ink flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center border-2 md:border-[3px] transition-colors duration-150'
+                  title='Visit GitHub profile'
+                >
+                  <ArrowUpRight className='h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5] transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5' />
+                </div>
+              </a>
+
+              {/* Card 3: LinkedIn */}
+              <a
+                href='https://www.linkedin.com/in/daffahan/'
+                target='_blank'
+                rel='noopener noreferrer'
+                className='group/card animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex cursor-pointer items-center justify-between gap-4 border-4 bg-white p-5 md:p-6 no-underline transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+              >
+                <div className='flex min-w-0 flex-1 items-center gap-4'>
+                  <div className='border-ink bg-blue text-white flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4'>
+                    <Briefcase className='h-5 w-5 stroke-[2.5]' />
+                  </div>
+                  <div className='min-w-0 flex-1'>
+                    <div className='text-[16px] font-bold tracking-[0.05em] uppercase'>
+                      LinkedIn
+                    </div>
+                    <div className='mt-0.5 truncate text-[12px] font-medium opacity-60'>
+                      Daffa Hanifisyafiq
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className='border-ink bg-bg group-hover/card:bg-yellow text-ink flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center border-2 md:border-[3px] transition-colors duration-150'
+                  title='Visit LinkedIn profile'
+                >
+                  <ArrowUpRight className='h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5] transition-transform duration-200 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5' />
+                </div>
+              </a>
+
+              {/* Card 4: Read CV */}
+              <button
+                type='button'
+                onClick={() => setShowCvModal(true)}
+                className='group/card animate-entrance border-ink shadow-base text-ink hover:shadow-hover active:shadow-press flex cursor-pointer items-center justify-between gap-4 border-4 bg-white p-5 md:p-6 text-left transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px]'
+                aria-label='View Curriculum Vitae PDF'
+              >
+                <div className='flex min-w-0 flex-1 items-center gap-4'>
+                  <div className='border-ink bg-yellow text-ink flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-4'>
+                    <FileText className='h-5 w-5 stroke-[2.5]' />
+                  </div>
+                  <div className='min-w-0 flex-1'>
+                    <div className='text-[16px] font-bold tracking-[0.05em] uppercase'>
+                      Read CV
+                    </div>
+                    <div className='mt-0.5 truncate text-[12px] font-medium opacity-60'>
+                      Curriculum Vitae (PDF)
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className='border-ink bg-bg group-hover/card:bg-yellow text-ink flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center border-2 md:border-[3px] transition-colors duration-150'
+                  title='View CV PDF preview'
+                >
+                  <FileText className='h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5] transition-transform duration-200 group-hover/card:scale-110' />
+                </div>
+              </button>
             </div>
 
             {/* Footer */}
@@ -795,6 +892,126 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* =============== CV MODAL =============== */}
+      {showCvModal && (
+        <div
+          className='bg-ink/90 modal-3d-stage fixed inset-0 z-50 flex touch-none items-center justify-center overflow-hidden overscroll-none p-4 sm:p-6 md:p-10'
+          onClick={() => setShowCvModal(false)}
+        >
+          <div
+            className='border-ink shadow-large relative flex max-h-[85vh] w-full max-w-[640px] flex-col border-4 bg-white border-l-[8px] border-l-yellow animate-entrance is-visible modal-3d-card transition-transform duration-300 md:max-h-[90vh]'
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowCvModal(false)}
+              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 z-50 flex h-9 w-9 items-center justify-center border-2 transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] md:-top-6 md:-right-6 md:h-12 md:w-12 md:border-4 cursor-pointer'
+              aria-label='Close CV modal'
+            >
+              <X className='h-5 w-5 stroke-[3] md:h-7 md:w-7' />
+            </button>
+
+            <div className='flex-1 p-5 sm:p-8 md:p-10'>
+              {/* Header Badge */}
+              <div className='mb-6 flex items-center justify-between border-b-4 border-ink pb-4'>
+                <div className='flex items-center gap-3'>
+                  <div className='border-ink bg-yellow text-ink flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 md:border-4'>
+                    <FileText className='h-5 w-5 stroke-[2.5]' />
+                  </div>
+                  <div>
+                    <h3 className='text-[18px] font-black tracking-tight uppercase sm:text-[22px]'>
+                      Curriculum Vitae
+                    </h3>
+                    <p className='text-ink/60 text-[11px] font-bold tracking-[0.08em] uppercase'>
+                      Daffa Hanifisyafiq — Resume
+                    </p>
+                  </div>
+                </div>
+                <span className='border-ink bg-red border-2 px-2.5 py-1 text-[11px] font-black text-white uppercase tracking-wider'>
+                  Coming Soon
+                </span>
+              </div>
+
+              {/* Document Preview Placeholder Box */}
+              <div className='border-ink border-4 bg-bg p-6 sm:p-8 text-center flex flex-col items-center justify-center gap-4 relative overflow-hidden'>
+                <div className='border-ink bg-white flex h-20 w-20 items-center justify-center rounded-full border-4 shadow-base mb-1'>
+                  <FileText className='text-blue h-10 w-10 stroke-[2]' />
+                </div>
+
+                <div className='space-y-1.5'>
+                  <h4 className='text-[18px] font-black uppercase text-ink'>
+                    PDF Document Coming Soon
+                  </h4>
+                  <p className='text-ink/75 max-w-sm text-[13px] sm:text-[14px] leading-relaxed font-medium mx-auto'>
+                    The latest updated 2026 CV is currently being polished with recent production projects &amp; case studies.
+                  </p>
+                </div>
+
+                <div className='border-ink bg-white border-2 p-3 w-full max-w-md text-left text-xs space-y-1.5'>
+                  <div className='flex justify-between items-center text-[11px] font-black text-ink/60 uppercase'>
+                    <span>Document: Daffa_Hanifisyafiq_CV_2026.pdf</span>
+                    <span className='text-red font-black'>Pending</span>
+                  </div>
+                  <div className='w-full bg-bg h-2 border border-ink overflow-hidden'>
+                    <div className='bg-yellow h-full w-3/4 border-r border-ink'></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className='mt-6 flex flex-wrap items-center justify-end gap-3'>
+                <button
+                  type='button'
+                  onClick={() => setShowCvModal(false)}
+                  className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-bg hover:bg-yellow text-ink border-2 md:border-4 px-5 py-2.5 text-[12px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] cursor-pointer'
+                >
+                  Close
+                </button>
+                <a
+                  href='mailto:daffahan29@gmail.com?subject=Request%20for%20CV%20-%20Daffa%20Hanifisyafiq'
+                  className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-blue hover:bg-red text-white border-2 md:border-4 px-5 py-2.5 text-[12px] font-black tracking-[0.06em] uppercase transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] inline-flex items-center gap-2 no-underline'
+                >
+                  <span>Request CV by Email</span>
+                  <ArrowUpRight className='h-4 w-4 stroke-[2.5]' />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =============== BAUHAUS TOAST NOTIFICATION =============== */}
+      {showCopyToast && (
+        <div
+          role='alert'
+          aria-live='assertive'
+          className='animate-puzzle border-ink shadow-large fixed right-5 bottom-5 z-50 flex max-w-[calc(100vw-32px)] items-center gap-3.5 border-4 border-l-[8px] border-l-yellow bg-white p-4 sm:right-8 sm:bottom-8 sm:gap-4 sm:p-5'
+        >
+          <div className='border-ink bg-yellow text-ink flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 md:border-[3px]'>
+            <Check className='h-5 w-5 stroke-[3]' />
+          </div>
+          <div className='min-w-0 pr-2'>
+            <div className='text-[13px] leading-tight font-black tracking-wider uppercase text-ink sm:text-[14px]'>
+              Email Copied!
+            </div>
+            <div className='mt-0.5 truncate text-[11px] font-medium text-ink/75 sm:text-[12px]'>
+              daffahan29@gmail.com
+            </div>
+          </div>
+          <button
+            type='button'
+            onClick={() => {
+              setShowCopyToast(false)
+              setCopiedEmail(false)
+              if (toastTimeoutRef.current) clearTimeout(toastTimeoutRef.current)
+            }}
+            className='border-ink bg-bg hover:bg-red hover:text-white ml-auto flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center border-2 transition-colors'
+            aria-label='Close notification'
+          >
+            <X className='h-4 w-4 stroke-[3]' />
+          </button>
         </div>
       )}
     </>
