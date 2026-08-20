@@ -549,36 +549,56 @@ export default function Home() {
                         aria-label={`View project: ${proj.title}`}
                       >
                         <article
-                          className={`border-ink shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-shadow duration-150 ${colColor.borderColor} border-l-[8px] ${colColor.borderL}`}
+                          className={`border-ink shadow-base group-hover:shadow-hover group-active:shadow-press flex h-full flex-col border-4 bg-white transition-all duration-200 group-hover:-translate-x-[2px] group-hover:-translate-y-[2px] group-active:translate-x-[2px] group-active:translate-y-[2px] border-l-[8px] ${colColor.borderL}`}
                         >
-                          <div className='border-ink flex items-center justify-between border-b-2 p-5 pb-3'>
-                            <div className='flex min-w-0 items-center gap-2.5 pr-2'>
-                              <h3 className='truncate text-[18px] font-bold tracking-[0.02em] uppercase'>
+                          {/* Folder Tab / Window Header */}
+                          <div className={`border-ink flex items-center justify-between border-b-4 p-2.5 px-4 ${colColor.statusColor}`}>
+                            <div className='flex items-center gap-1.5'>
+                              <div className='border-ink h-3 w-3 rounded-full border-2 bg-white'></div>
+                              <div className='border-ink h-3 w-3 rounded-full border-2 bg-white'></div>
+                            </div>
+                            <div className='border-ink bg-white px-2 py-0.5 text-[9px] font-black uppercase tracking-[0.1em] border-2'>
+                              {proj.status}
+                            </div>
+                          </div>
+
+                          {/* Project Image */}
+                          {proj.image && (
+                            <div className='border-ink relative aspect-video w-full overflow-hidden border-b-4 bg-bg'>
+                              <Image
+                                src={proj.image}
+                                alt={proj.title}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                className='object-cover transition-transform duration-500 group-hover:scale-105'
+                              />
+                            </div>
+                          )}
+
+                          <div className='flex flex-1 flex-col p-5'>
+                            <div className='mb-3 flex items-start justify-between gap-3'>
+                              <h3 className='text-[18px] font-black tracking-[0.02em] uppercase leading-tight line-clamp-2'>
                                 {proj.title}
                               </h3>
                               {proj.link && proj.link !== '#' && (
                                 <span
-                                  className='border-ink bg-bg group-hover:bg-yellow text-ink inline-flex h-6 w-6 shrink-0 items-center justify-center border-2 transition-colors duration-150'
+                                  className='border-ink bg-white group-hover:bg-yellow text-ink inline-flex h-8 w-8 shrink-0 items-center justify-center border-2 transition-colors duration-200'
                                   title='Live Project'
                                 >
-                                  <ArrowUpRight className='h-3.5 w-3.5 stroke-[2.5] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+                                  <ArrowUpRight className='h-4 w-4 stroke-[3] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
                                 </span>
                               )}
                             </div>
-                            <div
-                              className={`border-ink h-3.5 w-3.5 shrink-0 rounded-full border-2 ${colColor.statusColor}`}
-                              title={proj.status}
-                            ></div>
-                          </div>
-                          <div className='flex flex-1 flex-col gap-3.5 p-4 px-5 pb-5'>
-                            <p className='text-[14px] leading-[1.6] font-medium'>
+                            
+                            <p className='text-ink/80 text-[14px] leading-[1.6] font-medium line-clamp-3 mb-5'>
                               {proj.desc}
                             </p>
+                            
                             <div className='mt-auto flex flex-wrap gap-2'>
                               {proj.tags.map((tag, j) => (
                                 <span
                                   key={j}
-                                  className='border-ink bg-bg border-2 px-2.5 py-1 text-[10px] font-bold tracking-[0.08em] uppercase'
+                                  className='border-ink bg-bg text-ink border-2 px-2 py-1 text-[10px] font-black tracking-[0.08em] uppercase'
                                 >
                                   {tag}
                                 </span>
