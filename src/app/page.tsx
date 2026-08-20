@@ -42,6 +42,7 @@ export default function Home() {
   const [copiedEmail, setCopiedEmail] = useState<boolean>(false)
   const [showCopyToast, setShowCopyToast] = useState<boolean>(false)
   const [showCvModal, setShowCvModal] = useState<boolean>(false)
+  const [selectedAchievement, setSelectedAchievement] = useState<{ title: string; imageUrl: string } | null>(null)
   const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleCopyEmail = async () => {
@@ -193,7 +194,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (selectedProject || showCvModal) {
+    if (selectedProject || showCvModal || selectedAchievement) {
       document.body.style.overflow = 'hidden'
       document.documentElement.style.overflow = 'hidden'
     } else {
@@ -204,7 +205,7 @@ export default function Home() {
       document.body.style.overflow = ''
       document.documentElement.style.overflow = ''
     }
-  }, [selectedProject, showCvModal])
+  }, [selectedProject, showCvModal, selectedAchievement])
 
   useEffect(() => {
     if (showAllProjects) {
@@ -223,6 +224,21 @@ export default function Home() {
       }, 50)
     }
   }, [showAllProjects])
+
+  const achievements = [
+    {
+      title: "Bootcamp Kampus Merdeka x Binar Academy Studi Independen Full-Stack Web",
+      imageUrl: "/images/DCert SIB KM_Full-Stack Web_Wave KM01_Daffa Hanifisyafiq.webp",
+      tags: ["Kampus Merdeka", "Binar Academy", "Bootcamp"],
+      color: "bg-blue"
+    },
+    {
+      title: "Best Student Kampus Merdeka x Binar Academy Studi Independen Full-Stack Web Wave KM01",
+      imageUrl: "/images/CertProgressiveStudent_Full-Stack Web_KM01_Daffa Hanifisyafiq.webp",
+      tags: ["Kampus Merdeka", "Binar Academy", "Best Student"],
+      color: "bg-red"
+    }
+  ]
 
   return (
     <>
@@ -591,6 +607,66 @@ export default function Home() {
 
           <div className='bg-ink h-1 w-full shrink-0'></div>
 
+          {/* =============== ACHIEVEMENTS =============== */}
+          <section className='p-6 md:p-10 lg:p-14' id='achievements'>
+            <div className='mb-8 flex items-start gap-4'>
+              <div className='bg-yellow border-ink h-12 w-12 shrink-0 rounded-full border-4'></div>
+              <div>
+                <h2>Achievements</h2>
+                <p className='text-ink/50 mt-2 text-[14px] leading-none font-bold tracking-[0.08em] uppercase'>
+                  Certifications & Awards
+                </p>
+              </div>
+            </div>
+
+            <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2'>
+              {achievements.map((ach, idx) => (
+                <div key={idx} className='animate-entrance h-full w-full'>
+                  <div
+                    role='button'
+                    tabIndex={0}
+                    onClick={() => setSelectedAchievement(ach)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ')
+                        setSelectedAchievement(ach)
+                    }}
+                    className='group relative block h-full w-full cursor-pointer text-left focus:outline-none'
+                    aria-label={`View achievement: ${ach.title}`}
+                  >
+                    <article className={`border-ink shadow-base group-hover:shadow-hover flex h-full flex-col border-4 bg-white transition-shadow duration-150 border-l-[8px] ${idx === 0 ? 'border-l-blue' : 'border-l-red'}`}>
+                      <div className='border-ink relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden border-b-4 bg-bg pointer-events-none'>
+                        <Image
+                          src={ach.imageUrl}
+                          alt={ach.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className='flex flex-1 flex-col gap-3.5 p-5 pb-5'>
+                        <h3 className='text-[16px] md:text-[18px] font-bold tracking-[0.02em] uppercase line-clamp-2' title={ach.title}>
+                          {ach.title}
+                        </h3>
+                        <div className='mt-auto flex flex-wrap gap-2 pt-2'>
+                          {ach.tags.map((tag, j) => (
+                            <span
+                              key={j}
+                              className={`border-ink text-white border-2 px-2.5 py-1 text-[10px] font-bold tracking-[0.08em] uppercase ${ach.color}`}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className='bg-ink h-1 w-full shrink-0'></div>
+
           {/* =============== BLOG / JOURNAL =============== */}
           <section className='bg-[#FFFDF7] p-6 md:p-10 lg:p-14' id='blog'>
             <div className='mb-8 flex flex-wrap items-center justify-between gap-4'>
@@ -907,6 +983,46 @@ export default function Home() {
                     {tag}
                   </span>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =============== ACHIEVEMENT MODAL =============== */}
+      {selectedAchievement && (
+        <div
+          className='bg-ink/90 modal-3d-stage fixed inset-0 z-50 flex touch-none items-center justify-center overflow-hidden overscroll-none p-4 sm:p-6 md:p-10'
+          onClick={() => setSelectedAchievement(null)}
+        >
+          <div
+            className='border-ink shadow-large relative flex h-[85vh] w-full max-w-[1000px] flex-col border-4 bg-white border-l-[8px] border-l-yellow animate-entrance is-visible modal-3d-card transition-transform duration-300 md:h-[90vh]'
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedAchievement(null)}
+              className='border-ink shadow-base hover:shadow-hover active:shadow-press bg-yellow absolute top-2 right-2 z-50 flex h-9 w-9 items-center justify-center border-2 transition-all hover:-translate-x-[1px] hover:-translate-y-[1px] active:translate-x-[2px] active:translate-y-[2px] md:-top-6 md:-right-6 md:h-12 md:w-12 md:border-4 cursor-pointer'
+              aria-label='Close modal'
+            >
+              <X className='h-5 w-5 stroke-[3] md:h-7 md:w-7' />
+            </button>
+
+            <div className='flex flex-col h-full overflow-hidden'>
+              <div className='p-4 sm:p-5 border-b-4 border-ink bg-bg'>
+                <h3 className='text-[16px] font-black tracking-tight uppercase sm:text-[20px] pr-8 md:pr-0 truncate' title={selectedAchievement.title}>
+                  {selectedAchievement.title}
+                </h3>
+              </div>
+              <div className='flex-1 relative w-full h-full bg-ink/5 overflow-y-auto'>
+                <div className='relative min-h-full w-full'>
+                  <Image
+                    src={selectedAchievement.imageUrl}
+                    alt={selectedAchievement.title}
+                    fill
+                    className='object-contain p-4'
+                    sizes="(max-width: 1000px) 100vw, 1000px"
+                  />
+                </div>
               </div>
             </div>
           </div>
